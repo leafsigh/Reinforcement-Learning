@@ -69,3 +69,46 @@ the above image depicts the total reward accumulated under different $\epsilon$ 
 ![optimal_action](Reinforcement Learning Notes.assets/optimal_action.png)
 
 This image depicts the optimal action’s accumulated reward. Other parameters setting is the same.
+
+This image depicts the optimal action’s accumulated reward. Other parameters setting is the same.
+
+**<font color ='steelblue'>The advantage of this method depends on the task</font>**
+
+- If the variance is >1, it will take more exploration to find out the optimal action
+
+- If variance=0, then the greedy method without $\epsilon$ will accumulate the optimal value
+
+- **<font color = 'cadetblue'>another complex situation is that the true value of each action changes overtime (nonstationary). And this is the commonly encountered situation in reinforcement learning.</font>**
+
+  
+
+**<font color='olive'>Softmax Action Selection</font>**
+
+The probability of choosing each action now is given by a softmax method. The common method uses Gibbs or Boltzmann distribution.
+
+It chooses action *a* on *t*th play with prob $\frac{e^{Q_{t}(a)/\tau}}{\sum_{b=1}^{n}e^{Q_{t}(b)/\tau}}$
+
+Parameter $\tau$ is called **Tempreture**
+
+- High temperature will cause actions to be all equiprobable. When $\tau \rightarrow \infty$, $prob \rightarrow \frac{1}{n}$. 
+- Low temperature will cause actions to differ by their estimated values. When $\tau \rightarrow 0$, the method will become greedy.
+
+Whether <font color='steelblue'> epsilon-greedy</font> or <font color='steelblue'>softmax</font> is unclear. It depends on the task.
+
+
+
+**<font color='olive'>Evaluations Versus Instructions</font>**
+
+- The reward received after each action gives some information about how good the action was, but it **says nothing at all about whether the action was correct or incorrect, that is, about whether or not it was best**
+- RL sharply contrasts with supervised learning. **In supervised learning, there is no need to try various actions.** Feedback from the environment directly indicates what the action should have been. **Feedback is independently of actions taken.**
+
+***<font color='skyblue'>Two examples to illustrat differnece in Evaluative and Instructive</font>***
+
+- Suppose there are 100 different actions. If you select action 32, evaluation will tell you the score you get from action 32. And you have to try various actions to find out the optimal strategy. Instruction would say what other action, say action number 67, would actually have been correct.
+
+- Evaluative training and instructive training use different optimization algorithms.
+
+  Instructive training use algo like Gradient Descent, to tell the algorithm where to go to search the parameter space.
+
+  Evaluative training use other algos to explore around space for optimization. Typical examples are Robbins–Monro and the Kiefer–Wolfowitz stochastic approximation algorithms.
+
