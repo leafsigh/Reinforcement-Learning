@@ -1,5 +1,11 @@
 ## Reinforcement Learning Notes
 
+**[Resource1: Lectures, Books, Surveys and Thesis of Reinforcement Learning](https://github.com/aikorea/awesome-rl)**
+
+**[Resource2: An Outsider’s Tour of Reinforcement Learning](http://www.argmin.net/2018/06/25/outsider-rl/)**
+
+
+
 #### <font color='seagreen'> Basic Notations and Elements</font>
 
 - **Policy**: defines behavior of the learning agent at a given time
@@ -111,4 +117,67 @@ Whether <font color='steelblue'> epsilon-greedy</font> or <font color='steelblue
   Instructive training use algo like Gradient Descent, to tell the algorithm where to go to search the parameter space.
 
   Evaluative training use other algos to explore around space for optimization. Typical examples are Robbins–Monro and the Kiefer–Wolfowitz stochastic approximation algorithms.
+
+***<font color='steelblue'>Binary Bandit Problem</font>***
+
+…...
+
+
+
+**<font color='olive'>Incremental Implementation</font>**
+
+The action-value methods mentioned above use sample average to estimate action values:
+
+$Q_{t}(a)=\frac{r_{1_{a}}+r_{2_{a}}+…+r_{k_{a}}}{k_{a}}$
+
+A problem with this straightforward method to estimate action values is that it increases the memory usage without bound when time t increases.
+
+**Incremental Implementation** can solve this problem. This method can estimate action values without t appearing in the estimation.
+
+**Denotions**:
+
+- $Q_{k}$: average of first k rewards for some action.
+- $Q_{k_{a}}$: the reward of action a at **kth** play. <font color='lightskyblue'>**Don’t mess up this with the above one.**</font>
+
+So the **incremental implementation** goes as follow:
+
+$Q_{k+1} = \frac{1}{k+1}\sum_{i=1}^{k+1} r_{i}$
+
+$= \frac{1}{k+1}(r_{k+1}+\sum_{i=1}^{k}r_{i})$
+
+$=\frac{1}{k+1}(r_{k+1}+kQ_{k}+Q_{k}-Q_{k})$
+
+$=\frac{1}{k+1}(r_{k+1}+(k+1)Q_{k}-Q_{k})$
+
+$=Q_{k}+\frac{1}{k+1}(r_{k+1}-Q_{k})$
+
+And the above method can be concluded as:
+
+$NewEstimate \leftarrow OldEstimate+Stepsize(Target - OldEstimate)$
+
+We denote the $Stepsize$ as $\alpha$.
+
+When $\alpha=\frac{1}{k}$, then this is the sample average method.
+
+**<font color='steelblue'>This is still the sample average method, but with a memory-saving method, which is incremental implementation</font>**
+
+
+
+**<font color='olive'>Tracking a Nonstationary Problem</font>**
+
+The above method is appropriate for stationary environment. For nonstationary environment, we can make $\alpha$ equal to a constant. **When $\alpha=constant$, the recent rewards will be given more weights than those past rewards.**
+
+$Q_{k}=Q_{k-1}+\alpha(r_{k}-Q_{k-1})$
+
+$Q_{k}=\alpha r_{k}+(1-\alpha)(Q_{k-1})$
+
+$Q_{k}=\alpha r_{k}+(1-\alpha)(Q_{k-2}+\alpha(r_{k-1}-Q_{k-2}))$
+
+$Q_{k}=\alpha r_{k}+\alpha(1-\alpha)r_{k-1}+(1-\alpha)^{2}Q_{k-2}$
+
+…….
+
+$Q_{k}=\alpha r_{k}+\alpha(1-\alpha)r_{k-1}+\alpha(1-\alpha)^{2}r_{k-2}+…+\alpha(1-\alpha)^{k-i}r_{i}+…+\alpha(1-\alpha)^{k-1}r_{1}+(1-\alpha)^{k}Q_{0}$
+
+$Q_{k}=(1-\alpha)^{k}Q_{0}+\sum_{i=1}^{k}\alpha(1-\alpha)^{k-i}r_{i}$
 
