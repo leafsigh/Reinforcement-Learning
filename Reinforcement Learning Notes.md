@@ -181,3 +181,49 @@ $Q_{k}=\alpha r_{k}+\alpha(1-\alpha)r_{k-1}+\alpha(1-\alpha)^{2}r_{k-2}+…+\alp
 
 $Q_{k}=(1-\alpha)^{k}Q_{0}+\sum_{i=1}^{k}\alpha(1-\alpha)^{k-i}r_{i}$
 
+We call this weighted average because $(1-\alpha)^{k}+\sum_{i=1}^{k}\alpha(1-\alpha)^{k-i}=1$
+
+This is sometimes also called ***exponetial, recency-weighted average***
+
+**<font color='steelblue'>Sometimes stepsize vary with timestep.  </font> **$\alpha_{k}(a)$ **<font color='steelblue'>denotes the step-size parameter used to process the reward received after the kth selection of action a. </font>**
+
+However, when we choose various step-size, convergence is not guaranteed. Sample average ($\alpha=\frac{1}{k}$ gurantees convergence to true action value by LLN). 
+
+**Two conditions required to guarantee convergence:**
+
+- $\sum_{k=1}^{\infty}\alpha_{k}(a)=\infty$
+- $\sum_{k=1}^{\infty}\alpha_{k}^{2}(a)<\infty$
+
+Both conditions are met in sample average case ( $\alpha=\frac{1}{k}$ ), but the second condition is not met for constant step-size case ( $\alpha=const.$ ). And actually, this is desired in nonstationary case.
+
+- The first condition is required to guarantee that the steps are large enough to eventually overcome any initial conditions or random fluctuations.
+- The second condition guarantees that eventually the steps become small enough to assure convergence.
+
+
+
+**<font color='olive'>2.6 Optimistic Initial Values</font>**
+
+All above methods have ignored the influence of initial action-value estimates $Q_{t=1}(a)$. In statistics, these methods are biased by their initial values.
+
+<font color='olivedrab'>***What are brought by this bias***</font>
+
+- Bias is permanent when $\alpha$ is constant but decrease over time.
+- Bias disappears when $\alpha=\frac{1}{k}$ (sample average) after all actions have been selected as least once.
+- **Upside**: provide a prior knowledge about what level of rewards can be expected
+- **Downside**: initial estimates become another set of parameters need to be estimated
+- When initial values are set far away from true value, this will encourage exploration, we call this strategy **optimistic initial values**. But this only works for ***stationary*** problem. 
+
+
+
+**<font color='olive'>2.7 Upper-Confidence-Bound Action Selection</font>**
+
+When we do exploring, it would be better if we can consider actions’ uncertainties and potential for being optimal. One effective way of selecting action is by:
+
+$A_{t}=argmax_{a}(Q_t(a)+c\sqrt{\frac{lnt}{N_{t}(a)}})$
+
+- $A_t$ is the selection
+- $lnt$ is the natural logarithm of time 
+- $N_t(a)$ is the times of taking action a before time t, the same as $k_a$ we used before
+- $c$ controls the degree of exploration
+
+when $N_t(a)=0$, the corresponding action will be chosen, because an action never been explored has greatest potential.
