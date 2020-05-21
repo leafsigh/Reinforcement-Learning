@@ -227,3 +227,141 @@ $A_{t}=argmax_{a}(Q_t(a)+c\sqrt{\frac{lnt}{N_{t}(a)}})$
 - $c$ controls the degree of exploration
 
 when $N_t(a)=0$, the corresponding action will be chosen, because an action never been explored has greatest potential.
+
+
+
+**<font color='olive'>2.8 Gradient Bandits</font>**
+
+In above methods, we assign probabilities to each action during each play. **Now we consider a prefenrence $H_t(a)$ to decide the probability $\pi_t(a)$ of selecting action a at time t.**
+
+$Pr(A_t=a)=\pi_t(a) = \frac{e^{H_t(a)}}{\sum_{b}^{n}e^{H_t(b)}}$
+
+To learn these preferences, we can update preferences after each step by:
+
+- $H_{t+1}(a) = H_{t}(a)+\alpha(R_t-\bar{R_{t}})(1-\pi_{t}(A_t))$  for $a = A_{t}$  (2.10)
+- $H_{t+1}(a) = H_{t}(a)-\alpha(R_t-\bar{R_{t}})\pi_{t}(A_t)$   $\forall a \ne A_{t}$    (2.10)
+
+where $\alpha$ is the step-size (depends on stationary or nonstationary problem), $\bar{R}$ is the average of all rewards up to time t.
+
+**<font color='deepskyblue'> Based on the preference-updating function, we can tell that, once the selected action increases current reward, then the preference of selecting this action will increase also. Vice versa.</font>**
+
+
+
+***<font color='darkolivegreen'>One can gain a deeper insight into above algorithm by understanding stochastic approximation of gradient ascent. In the perspective of SGA, the algorithm goes like:</font>***
+
+- $H_{t+1}(a) = H_{t}(a)+\alpha\frac{\partial\mathbb{E}[R_t]}{H_{t}(a)}$  (2.11)
+
+- where   $\mathbb{E}[R_t]=\sum_{b}^{n}q(b)\pi(b)$
+
+ $q(b)$ is the true reward get from action b. However, we don’t know $q(b)$. Fortunately, **the updates in algorithm 2.10 equals to algorithm 2.11 in expected values.**
+
+
+
+***<font color='darkolivegreen'>Mathematical Proof</font>***
+
+$H_{t+1}(a) = H_{t}(a)+\alpha\frac{\partial\mathbb{E}[R_t]}{\partial H_{t}(a)}$
+
+Focus on $\frac{\partial\mathbb{E}[R_t]}{H_{t}(a)}$
+
+$\frac{\partial\mathbb{E}[R_t]}{H_{t}(a)} = \frac{\partial\sum_{b}^{n}q(b)\pi(b)}{\partial H_{t}(a)}$ 
+
+=$\sum_{b}^{n}q(b) \frac{\partial \pi(b)}{\partial H_t(a)}$     $q(b)$ can be extracted before because true reward is fixed. $\pi(b)$ is a function of $H_t(b)$
+
+=$\sum_{b}^{n}(q(b)-X_t) \frac{\partial \pi(b)}{\partial H_t(a)}$    
+
+…...
+
+
+
+**<font color='olive'>2.9 Associative Search</font>**
+
+…...
+
+
+
+
+
+
+
+#### <font color='seagreen'>Chapter 3. Finite Markov Decision Process</font>
+
+**<font color='olive'>3.1 The Agent-Environment Interface</font>**
+
+- The learner and decision-maker is called *agent*
+- The thing *agent* interacts with, comprising everything outside the agent, is called *environment*
+- A complete specification of an environment defines a *task*, one instance of reinforcement learning problem
+
+The interaction happens continually at each of a time sequence $t=0,1,2,3……$
+
+At each $t$, agent receives a state $S_t$, on that basis select an action $A_t \in \mathbb{A}(S_t)$, one time step later, agent receives reward $R_{t+1}$, and the environment goes into $S_{t+1}$. Before loop goes recurrently.
+
+<img src="../../Reinforcement Learning/Reinforcement Learning Notes.assets/image-20200521162257021.png" alt="image-20200521162257021" style="zoom:40%;" />
+
+**<font color='steelblue'>The agent implements a mapping from states to probabilities of selecting the each possible action.</font>**
+
+- For example, $\pi_{t}(a|S)$ represents the prob. of choosing action a when in state S of time-step t.
+
+
+
+**<font color='deepskyblue'>Sometimes the boundary between agent and environment can be confusing.</font>**
+
+- General rule we follow is that anything cannot be changed arbitrarily by the agent is considered to be outside of it and thus part of the environment.
+
+
+
+**<font color='yellowgreen'>Any problem of learning goal-directed behavior
+can be reduced to three signals passing back and forth between an agent and
+its environment</font>**
+
+- **Signal1**: represent the choices made by the agent. (actions)
+- **Signal2**: represent the basis where choices are made. (states)
+- **Signal3**: define the agent’s goal. (rewards)
+
+This frame is not sufficient to represent all, but widely useful.
+
+
+
+**<font color='olive'>3.2 Goals and Rewards</font>**
+
+- The rewards are computed in th environment rather than in the agent.
+- The reason we do this is the ultimate goal of agent should be something over which it has imperfect controls.
+
+
+
+**<font color='olive'>3.3 Returns</font>**
+
+Denote the sequence of rewards after time $t$ to be $R_{t+1}, R_{t+2}…$, in general, we seek to maximize the expected return. A straightforward way to express is:
+
+$G_{t} = R_{t+1}+R_{t+2}+R_{t+3}+…+R_T$
+
+**Use above denotion to introduce 2 reinforcement learning tasks:**
+
+- **<font color='cornflowerblue'>Episodic</font>**: such as plays of a game, trips through a maze, or any repeated interactions. Each episode ends in a special state called **Terminal State ($S_T$)**.
+
+- **<font color='cornflowerblue'>Continuing</font>**: in many cases, agent-environment interactions cannot be break into episodes, but goes continually without limit. $T=\infty$.
+
+- **<font color='royalblue'>Discounting</font>**: this is an additional concept other than **Episodic** and **Continuing**. Sometimes future rewards need to be discounted when setting up our current goal.
+
+  $G_{t} = R_{t+1}+\gamma R_{t+1}+\gamma^{2}R_{t+2}+\gamma^{3}R_{t+3}+…=\sum_{k=0}^{\infty}(\gamma^{k}R_{t+k+1})$, where $\gamma$ is called discount rate and $0\le\gamma\le1$
+
+
+
+**<font color='olive'>3.4 Unified Notations for Episodic and Continuing Tasks</font>**
+
+We use $S_{t,i},A_{t,i},R_{t,i},\pi_{t,i},T_{i}$, to represent state at time $t$ of episode $i$.
+
+Another notation is for covering both episodic and continuing tasks.
+
+<img src="../../Reinforcement Learning/Reinforcement Learning Notes.assets/image-20200521171409571.png" alt="image-20200521171409571" style="zoom:40%;" />
+
+The solid-squared state is called ***absorbing state*** for episodic task. This is corresponding to the end of the episode. Rewards of ***absorbing state*** are always 0.
+
+By applying ***absorbing state***, we can unified write the current return of both episodic and continuing tasks in  the way of:
+
+$G_{t}=\sum_{k=0}^{T-t-1}\gamma^{k}R_{t+k+1}$
+
+
+
+**<font color='olive'>3.5 The Markov Property</font>**
+
+…...
