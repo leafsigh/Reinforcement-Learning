@@ -362,6 +362,123 @@ $G_{t}=\sum_{k=0}^{T-t-1}\gamma^{k}R_{t+k+1}$
 
 
 
+
+
 **<font color='olive'>3.5 The Markov Property</font>**
 
-…...
+- ***State Signal***:
+  1. The state signal should include immediate sensations such as sensory measurement. But of course, sometimes more than that
+  2. The state signal should not inform the agent of everything about the environment, or even everything that would be useful for making decisions
+  3. What we would expect, is a state signal that summarizes past sensations compactly, yet in such a way that all relevant information is retained. A state signal that succeeds in retaining all relevant information is said to be ***Markov***, or to have the ***Markov property***
+
+**<font color='steelblue'>Consider how a general environment respond at time *t+1* given the action at time *t*.</font>**
+
+$PR\{R_{t+1}=r, S_{t+1}=s’|S_0,A_0,R_1…S_{t-1},A_{t-1},R_{t},S_t,A_t\}$
+
+**<font color='steelblue'>If the state signal has Markov Property, then the environment's response at t+1 depends only on the state and action representations at t</font>**
+
+$p(s’,r|s,a)=PR\{R_{t+1}=r, S_{t+1}=s’|S_t,A_t\}$   (3.5)
+
+***If an state has Markov property, then its one-step dynamics (3.5) enable us to predict the next state and expected next reward given the current state and action***
+
+***By iterating this equation (3.5), one can also predict all future states and expected reward***
+
+**<font color='yellowgreen'>For all of these reasons, it is useful to think of the state at each time step as an approximation to a Markov state, although one should remember that it may not fully satisfy the Markov property.</font>**
+
+
+
+
+
+**<font color='olive'>3.6 Markov Decision Process</font>**
+
+A reinforcement learning task that satises the Markov property is called a ***Markov decision process, or MDP.***
+
+- if the state and action space is finite, we call this Finite ***Markov Decision Process, or Finite MDP***
+- 90% reinforcement learning problems can be covered by Finite MDP.
+
+
+
+**<font color='mediumseagreen'>A particular nite MDP is dened by its state and action sets and by the one-step dynamics of the environment. Given any state and action s and a, the probability of each possible pair of next state and reward, s' r is denoted</font>**
+
+$p(s’,r|s,a) = Pr\{S_{t+1}=s’,R_{t+1}=r|S_{t}=s,A_{t}=a\}$   (3.6)
+
+Given the dynamic state specified by (3.6), one can compute any anything else of the environment, such as the 
+
+- **expected rewards of state-action pairs.**
+
+  $r(s,a)=\mathbb{E}[R_{t+1}|S_t=s,A_t=a]=\sum_{r\in \mathcal{R}}rp(s,a)=\sum_{r\in \mathcal{R}}r\sum_{s'\in \mathcal{S}}p(s',r|s,a)$, where $\mathcal{R}$ and $\mathcal{S}$ are reward and state spaces.
+
+- **State-Transition Probabilities**
+
+  $p(s’|s,a)=Pr\{S_{t+1}=s’|S_t=s,A_t=a\}=\sum_{r\in R}p(s’,r|s,a)$
+
+- **Expected Rewards for state-action-next-state triples**
+
+  $r(s’,a,s)=\mathbb{E}[R_{t+1}|S_{t+1}=s’,S_t=s,A_t=a]= \sum_{r\in \mathcal{R}}rp(r|s’,a,s) =\frac{\sum_{r\in R} p(s’,r|s,a)}{p(s’|s,a)}$
+
+  
+
+**<font color='olive'>3.7 Value Functions</font>**
+
+Recall that a policy $\pi$, is a mapping from each state $s\in \mathcal{S}$, and each action $a \in \mathcal{A}(s)$, to the probability $\pi(a|s)$ of taking action a in state s.
+
+- ***<u>Informally, the value of a state $s$ under a policy $\pi$, denoted $v_{\pi}(s)$, is the expected return when starting in $s$ and following $\pi$ thereafter.</u>***
+
+  For MDPs, we can define $v_{\pi}(s)$ formally as:
+
+  $v_{\pi}(s)=\mathbb{E}_{\pi}[G_t|S_t=s]=\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}r_{t+k+1}|S_t=s]$
+
+  where $\mathbb{E}[.]$ denotes the expected value of a random variable given that agent always follow policy $\pi$.
+
+  ***<font color='steelblue'> We call function</font>*** $v_{\pi}$ ***<font color='steelblue'>the state-value function for policy</font>*** $\pi$.
+
+- <u>***Similarly, we define the value of taking action $a$ in state $s$ under a policy $\pi$, denoted $q(s,a)$, as the expected return starting from $s$, taking the action a, and thereafter following policy $\pi$.***</u>
+
+  $q_{\pi}(s,a) = \mathbb{E}_{\pi}[G_t|S_t=s,A_t=a]=\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s,A_t=a]$
+
+  ***<font color='steelblue'> We call function</font>*** $q_{\pi}$ ***<font color='steelblue'>the action-value function for policy</font>*** $\pi$.
+
+  **<font color='red'>Mention that r is the true reward and R is the observed reward.</font>**
+
+- Value functions $v_{\pi}$ and $q_{\pi}$ can be estimated by experience:
+
+  - if an agent follows policy $\pi$ in each state $s$ encountered, and maintain the average of the reward followed in that state, then it will finanlly converge to $v_{\pi}$ as approach to infinity:
+
+    $lim_{N\rightarrow\infty}\{\frac{1}{N}\sum_{t=0}^{N}r_{t}(s,\pi(s))\}\rightarrow v_{\pi}(s)$
+
+  - if seperate average are recorded for each action taken (mapped by the policy), then the average will finally converge to $q_{\pi}$
+
+    $lim_{m_{1}\rightarrow\infty}\{\frac{1}{m_{1}}\sum^{m_{1}}r(s,a_{1}=\pi(s))\}\rightarrow q_{\pi}(s,a_{1})$
+
+    $lim_{m_{2}\rightarrow\infty}\{\frac{1}{m_{2}}\sum^{m_{2}}r(s,a_{2}=\pi(s))\}\rightarrow q_{\pi}(s,a_{2})$
+
+    ...
+
+    $lim_{m_{n}\rightarrow\infty}\{\frac{1}{m_{n}}\sum^{m_{n}}r(s,a_{n}=\pi(s))\}\rightarrow q_{\pi}(s,a_{n})$
+
+    where $\mathcal{A}(s)=\{a_{1},a_{2},…,a_{n}\}$ and $\sum_{i=0}m_{i}=N$
+
+  - The estimation method **Monte Carlo Simulation** will be introduced later.
+
+- A fundamental property of value functions used throughout reinforcement learning and dynamic programming is that **<u>they satisfy particular recursive relationships.</u>** For any policy $\pi$ and any states $s$, the following consistency condition holds between the value of $s$ and the value of its possible successor states:
+
+  $v_{\pi}(s)=\mathbb{E}[G_t|S_t=s]$
+
+  $=\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]$
+
+  $=\mathbb{E}_{\pi}[R_{t+1}+\sum_{k=1}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]$
+
+  $=\mathbb{E}_{\pi}[R_{t+1}|S_t=s]+\mathbb{E}_{\pi}[\gamma\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]$
+
+  $=r*\sum_{s \in \mathcal{S}}p(s)+\mathbb{E}_{\pi}[\sum_{k=1}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]$
+
+  $=r*\sum_{a \in \mathcal{A}(s)}\pi(a|s)p(s,a)+\mathbb{E}_{\pi}[\sum_{k=1}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]$
+
+  $=r*\sum_{a \in \mathcal{A}(s)}\pi(a|s)\sum_{s'\in \mathcal{S},r\in \mathcal{R}}p(s’,r|s,a)+\gamma\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]$
+
+  $=\sum_{a \in \mathcal{A}(s)}\pi(a|s)\sum_{s'\in \mathcal{S},r\in \mathcal{R}}p(s’,r|s,a)(r+\gamma\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}|S_{t+1}=s'])$
+
+  $=\sum_{a}\pi(a|s)\sum_{s’,r}p(s’,r|s,a)(r+\gamma v_{\pi}(s'))$
+
+
+
