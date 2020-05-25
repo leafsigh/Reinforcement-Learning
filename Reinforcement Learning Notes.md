@@ -416,7 +416,10 @@ Given the dynamic state specified by (3.6), one can compute any anything else of
 
   $r(s’,a,s)=\mathbb{E}[R_{t+1}|S_{t+1}=s’,S_t=s,A_t=a]= \sum_{r\in \mathcal{R}}rp(r|s’,a,s) =\frac{\sum_{r\in R} p(s’,r|s,a)}{p(s’|s,a)}$
 
-  
+
+
+
+
 
 **<font color='olive'>3.7 Value Functions</font>**
 
@@ -432,13 +435,11 @@ Recall that a policy $\pi$, is a mapping from each state $s\in \mathcal{S}$, and
 
   ***<font color='steelblue'> We call function</font>*** $v_{\pi}$ ***<font color='steelblue'>the state-value function for policy</font>*** $\pi$.
 
-- <u>***Similarly, we define the value of taking action $a$ in state $s$ under a policy $\pi$, denoted $q(s,a)$, as the expected return starting from $s$, taking the action a, and thereafter following policy $\pi$.***</u>
+- <u>***Similarly, we define the value of taking action $a$ in state $s$ under a policy $\pi$, denoted $q_{\pi}(s,a)$, as the expected return starting from $s$, taking the action a, and thereafter following policy $\pi$.***</u>
 
   $q_{\pi}(s,a) = \mathbb{E}_{\pi}[G_t|S_t=s,A_t=a]=\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s,A_t=a]$
 
   ***<font color='steelblue'> We call function</font>*** $q_{\pi}$ ***<font color='steelblue'>the action-value function for policy</font>*** $\pi$.
-
-  **<font color='red'>Mention that r is the true reward and R is the observed reward.</font>**
 
 - Value functions $v_{\pi}$ and $q_{\pi}$ can be estimated by experience:
 
@@ -470,17 +471,68 @@ Recall that a policy $\pi$, is a mapping from each state $s\in \mathcal{S}$, and
 
   $=\mathbb{E}_{\pi}[R_{t+1}|S_t=s]+\mathbb{E}_{\pi}[\gamma\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+2}|S_t=s]$
 
-  $=r*\sum_{s \in \mathcal{S}}p(s)+\mathbb{E}_{\pi}[\gamma\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+2}|S_t=s]$
+  $=\sum_{r\in R}r*p(r|s)+\mathbb{E}_{\pi}[\gamma\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+2}|S_t=s]$
 
-  $=r*\sum_{a \in \mathcal{A}(s)}\pi(a|s)p(s,a)+\mathbb{E}_{\pi}[\sum_{k=1}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]$
+  $=\sum_{r\in R}r*\sum_{a \in \mathcal{A}(s)}\pi(a|s)p(r|s,a)+\gamma\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+2}|S_t=s]$
 
-  $=r*\sum_{a \in \mathcal{A}(s)}\pi(a|s)\sum_{s'\in \mathcal{S},r\in \mathcal{R}}p(s’,r|s,a)+\gamma\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+2}|S_t=s]$
+  $=\sum_{r\in R}r*\sum_{a \in \mathcal{A}(s)}\pi(a|s)\sum_{s'\in \mathcal{S}}p(s’,r|s,a)+\gamma\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+2}|S_t=s]$
 
   $=\sum_{a \in \mathcal{A}(s)}\pi(a|s)\sum_{s'\in \mathcal{S},r\in \mathcal{R}}p(s’,r|s,a)(r+\gamma\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+2}|S_{t+1}=s'])$
 
-  $=\sum_{a}\pi(a|s)\sum_{s’,r}p(s’,r|s,a)(r+\gamma v_{\pi}(s'))$
-  
-  
+  $=\sum_{a}\pi(a|s)\sum_{s’,r}p(s’,r|s,a)(r+\gamma v_{\pi}(s'))$      （3.12）
+
+  This equation is called ***Bellman Equation*** for $v_{\pi}(s)$, it expresses a relationship between the value of a state and the values of its successor states.
+
+- Think of looking ahead from one state to its possible successor states:
+
+  <img src="../../Reinforcement Learning/Reinforcement Learning Notes.assets/image-20200525134131000.png" alt="image-20200525134131000" style="zoom:33%;" />
+
+  *open circle stands for state, solid circle stands for state-action pair*
+
+  **<font color='cornflowerblue'>So the Bellman Equation states that the value of the start state must equal the discounted value of the expected next state, plus the expected reward along the way.</font>**
 
 
 
+**<font color='olive'>3.8 Optimal Value Functions</font>**
+
+***<font color='darkolivegreen'>Value functions define a partial ordering over policies</font>***
+
+- A policy $\pi$ is defined to be better than or equal to policy $\pi’$ if its expected return is greater than or equal to that of $\pi’$ for all states.
+
+- In math language: $\pi \ge \pi’$ if and only if $v_{\pi}(s)\ge v_{\pi’}(s)$ for all $s\in \mathcal{S}$
+
+- <u>***There is always at least one policy better than or equal to all other policies, this is called <font color='steelblue'>optimal policy</font>, denoted as***</u> $\pi_{*}$. <u>***They share the same <font color='steelblue'>optimal state-value function</font>***</u> $v_{*}$.
+
+  $v_{*}(s)=max_{\pi}v_{\pi}(s)$ for all $s \in \mathcal{S}$
+
+- <u>***Optimal policies also share the same <font color='steelblue'>optimal action-value function</font>***</u> $q_{*}$.
+
+  $q_{*}(s,a) = max_{\pi}q_{\pi}(s,a)$ for all $s \in \mathcal{S}$ and $a \in \mathcal{A}(s)$.
+
+- For the state-action pair (s,a), $q_{*}(s,a)$ gives the expected return for taking action a in the state s, and follow the optimal policy thereafter.
+
+  $q_{*}(s,a) = \mathbb{E}[R_{t+1}+\gamma v_{*}(S_{t+1})|S_t=s,A_t=a]$
+
+***<font color='darkolivegreen'>Bellman Optimality Equation</font>***
+
+- **<font color='deepskyblue'>The value of a state under an optimal policy must equal the expected return for the best action from that state</font>**
+
+-  ***Bellman Optimality Equation*** for $v_{*}$  (3.16 and 3.17)
+
+  $v_{*}(s) = max_{a\in \mathcal{A}(s)}q_{\pi_{*}}(s,a)$
+
+  $=max_{a\in \mathcal{A}(s)}\mathbb{E}_{\pi_{*}}[G_t|S_t=s,A_t=a]$
+
+  $=max_{a\in \mathcal{A}(s)}\mathbb{E}_{\pi_{*}}[\sum_{k=0}\gamma^{k}R_{t+k+1}|S_t=s,A_t=a]$
+
+  $=max_{a\in \mathcal{A}(s)}\mathbb{E}_{\pi_{*}}[R_{t+1}+\gamma\sum_{k=0}\gamma^{k}R_{t+k+2}|S_t=s,A_t=a]$
+
+  $=max_{a\in \mathcal{A}(s)}\mathbb{E}_{\pi_{*}}[R_{t+1}+\gamma v_{*}(S_{t+1})|S_t=s,A_t=a]$    （3.16）
+
+  $=max_{a\in \mathcal{A}(s)}\sum_{s’,r}p(s’,r|s,a)(r+\gamma v_{*}(s'))$                  （3.17）
+
+-  ***Bellman Optimality Equation*** for $q_{*}$
+
+  $q_{*}(s,a) = \mathbb{E}_{\pi_{*}}[R_{t+1}+\gamma \mathcal{max}_{a’}q_{*}(S_{t+1},a’)|S_t=s,A_t=a]$
+
+  $
