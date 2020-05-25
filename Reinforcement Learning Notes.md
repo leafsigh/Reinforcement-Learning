@@ -426,7 +426,7 @@ Recall that a policy $\pi$, is a mapping from each state $s\in \mathcal{S}$, and
 
   For MDPs, we can define $v_{\pi}(s)$ formally as:
 
-  $v_{\pi}(s)=\mathbb{E}_{\pi}[G_t|S_t=s]=\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}r_{t+k+1}|S_t=s]$
+  $v_{\pi}(s)=\mathbb{E}_{\pi}[G_t|S_t=s]=\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]$
 
   where $\mathbb{E}[.]$ denotes the expected value of a random variable given that agent always follow policy $\pi$.
 
