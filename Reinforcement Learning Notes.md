@@ -468,17 +468,19 @@ Recall that a policy $\pi$, is a mapping from each state $s\in \mathcal{S}$, and
 
   $=\mathbb{E}_{\pi}[R_{t+1}+\sum_{k=1}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]$
 
-  $=\mathbb{E}_{\pi}[R_{t+1}|S_t=s]+\mathbb{E}_{\pi}[\gamma\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]$
+  $=\mathbb{E}_{\pi}[R_{t+1}|S_t=s]+\mathbb{E}_{\pi}[\gamma\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+2}|S_t=s]$
 
-  $=r*\sum_{s \in \mathcal{S}}p(s)+\mathbb{E}_{\pi}[\sum_{k=1}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]$
+  $=r*\sum_{s \in \mathcal{S}}p(s)+\mathbb{E}_{\pi}[\gamma\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+2}|S_t=s]$
 
   $=r*\sum_{a \in \mathcal{A}(s)}\pi(a|s)p(s,a)+\mathbb{E}_{\pi}[\sum_{k=1}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]$
 
-  $=r*\sum_{a \in \mathcal{A}(s)}\pi(a|s)\sum_{s'\in \mathcal{S},r\in \mathcal{R}}p(s’,r|s,a)+\gamma\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}|S_t=s]$
+  $=r*\sum_{a \in \mathcal{A}(s)}\pi(a|s)\sum_{s'\in \mathcal{S},r\in \mathcal{R}}p(s’,r|s,a)+\gamma\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+2}|S_t=s]$
 
-  $=\sum_{a \in \mathcal{A}(s)}\pi(a|s)\sum_{s'\in \mathcal{S},r\in \mathcal{R}}p(s’,r|s,a)(r+\gamma\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+1}|S_{t+1}=s'])$
+  $=\sum_{a \in \mathcal{A}(s)}\pi(a|s)\sum_{s'\in \mathcal{S},r\in \mathcal{R}}p(s’,r|s,a)(r+\gamma\mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^{k}R_{t+k+2}|S_{t+1}=s'])$
 
   $=\sum_{a}\pi(a|s)\sum_{s’,r}p(s’,r|s,a)(r+\gamma v_{\pi}(s'))$
+  
+  
 
 
 
