@@ -398,7 +398,7 @@ A reinforcement learning task that satises the Markov property is called a ***Ma
 
 
 
-**<font color='mediumseagreen'>A particular nite MDP is dened by its state and action sets and by the one-step dynamics of the environment. Given any state and action s and a, the probability of each possible pair of next state and reward, s' r is denoted</font>**
+**<font color='mediumseagreen'>A particular finite MDP is dened by its state and action sets and by the one-step dynamics of the environment. Given any state s and action a, the probability of each possible pair of next state and reward, s' r is denoted</font>**
 
 $p(s’,r|s,a) = Pr\{S_{t+1}=s’,R_{t+1}=r|S_{t}=s,A_{t}=a\}$   (3.6)
 
@@ -535,4 +535,15 @@ Recall that a policy $\pi$, is a mapping from each state $s\in \mathcal{S}$, and
 
   $q_{*}(s,a) = \mathbb{E}_{\pi_{*}}[R_{t+1}+\gamma \mathcal{max}_{a’}q_{*}(S_{t+1},a’)|S_t=s,A_t=a]$
 
-  $
+  $=\sum_{s’,r}p(s’,r|s,a)(r+\gamma max_{a’}q_{*}(s’,a'))$
+  
+- ***Backup Diagram Corresponding to above Bellman Optimality Equation***
+
+  <img src="../../Reinforcement Learning/Reinforcement Learning Notes.assets/image-20200525174802212.png" alt="image-20200525174802212" style="zoom:33%;" />
+
+- ***For finite MDPs, the Bellman Optimality (3.17) has a unique solution independent of the policy. The Bellman Optimality is actually a system of equations, one for each state. So if there are N states, there will be N equations in N unknowns.***
+
+<font color='darkseagreen'>**Once one has**</font> $v_{*}$,<font color='darkseagreen'> **it is relatively easy to determine an optimal policy**</font>. For each state $s$, there will be one or more actions at which the maximum is obtained in the Bellman optimality equation. Any policy that assigns non-zero probability only to these actions is an optimal policy. You can think of this as a one-step search. If you have the optimal value function, $v_{*}$, then the actions that appear best after a one-step search will be optimal actions. Another way of saying this is that any policy that is greedy with respect to the optimal evaluation function $v_{*}$ is an optimal policy.
+
+<font color='darkseagreen'>**Having**</font> $q_{*}$<font color='darkseagreen'> **makes choosing optimal policy still easier. **</font>With $q_{*}$, the agent does not even have to do a one-step-ahead search: for any state $s$, it can simply find any action that maximizes $q_{*}(s,a)$. The action-value function eectively catches the results of all one-step-ahead searches. It provides the optimal expected long-term return as a value that is locally and immediately available for each state-action pair.
+
