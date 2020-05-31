@@ -8,3 +8,6 @@ N-Armed-Bandit.ipynb now has included the entire algorithms of this interesting 
 - 2 initial value setup methods: add baseline and setup burning period.
 
 Future works on this script will focus on optimizing the performance and correct potential bugs.
+
+# Dynamic Programming
+Currently working on multiple dynamic programming algorithms.
