@@ -547,3 +547,72 @@ Recall that a policy $\pi$, is a mapping from each state $s\in \mathcal{S}$, and
 
 <font color='darkseagreen'>**Having**</font> $q_{*}$<font color='darkseagreen'> **makes choosing optimal policy still easier. **</font>With $q_{*}$, the agent does not even have to do a one-step-ahead search: for any state $s$, it can simply find any action that maximizes $q_{*}(s,a)$. The action-value function eectively catches the results of all one-step-ahead searches. It provides the optimal expected long-term return as a value that is locally and immediately available for each state-action pair.
 
+
+
+
+
+
+
+#### <font color='seagreen'>Chapter 4. Dynamic Programming</font>
+
+**<font color='cornflowerblue'>The key idea of DP, and of reinforcement learning generally,is the use of value functions to organize and structure the search of good policies.</font>**
+
+**Bellman Optimality Equation**
+
+- $v_{*} = max_{a}\mathbb{E}[R_{t+1}+\gamma(v_{*}(S_{t+1}))|S_t = s,A_t=a]$
+
+  $=max_{a}\sum_{s',r}p(s’,r|s,a)[r+\gamma v_{*}(S_{t+1})]$
+
+- $q_{*}(s,a) = \mathbb{E}[R_{t+1}+\gamma max_{a’}q_{*}(S_{t+1},a’)|S_t=s,A_t=a]$
+
+  $=\sum_{s’,r}p(s’,r|s,a)[r+\gamma max_{a’}q_{*}(s’,a')]$
+
+
+
+**<font color='olive'>4.1 Policy Evaluation</font>**
+
+Recall the value function:
+
+$v_{\pi}(S_t) = \mathbb{E}[R_{t+1}+\gamma R_{t+2} +\gamma^{2}R_{t+3}+...|S_t=s,A_t=a]$
+
+$=\mathbb{E}[R_{t+1}+\gamma v_{\pi}(S_{t+1})|S_t=s,A_t=a]$
+
+$=\sum_{a\in\mathcal{A}}\pi(a|s)\sum_{r,s’}p(s’,r|s,a)(r+\gamma v_{\pi}(s'))$
+
+
+
+***If the environment’s dynamics are known, then this is a system of $|\mathcal{S}|$ simultaneous linear equations in$|\mathcal{S}|$ unknowns.***
+
+- $|\mathcal{S}|=\{s_1,s_2,…,s_n\}$, then there will be n unknowns
+- each unknown is $v_{\pi}(s)$
+- Then you just need to solve the linear equation system of these n unknowns.
+
+
+
+<font color='purple'>**However, the algorithm that is suitable for this solution is *Iterative Policy Evaluation* **</font>
+
+- use a sequence of iteration: $[v_1,v_2,v_3,…v_k]$
+
+- each of $v_0,v_1,…$ will map each of ${s_1,s_2,…,s_n}$ to $\mathbb{R}={r_1,r_2,…}$, which is the reward set.
+
+- initial $v_0$ can be set to 0
+
+- updating of this sequence from $v_k$ to $v_{k+1}$ is obtained by Bellman Equation:
+
+  $v_{k+1}(S_t) = \mathbb{E}[R_{t+1}+\gamma v_{k}(S_{t+1})|S_t=s,A_t=a]$
+
+  $=\sum_{a}\pi(a|s)\sum_{s’,r}p(s’,r|s,a)(r+\gamma v_{k}(s'))$
+
+- for all $s \in \mathcal{S}$, $v_k=v_{\pi}$ is a fixed point for this update rule because the Bellman Equation for $v_{\pi}$ assures us of equality in this case.
+
+- as $k \rightarrow \infty$, $\{v_k\}$ can be shown in general converge to $v_{\pi}$.
+
+- <font color='indigo'>**To realize this algorithm, following methods can be applied**</font>
+
+  - ***Two-Array Full Backup***: two arrays are needed, one for $v_{k}(s)$ and one for $v_{k+1}(s)$. In this way, new values can be computed one by one from old values without changing old values.
+  - ***One-Array Full Backup***: what is different from above, is only one array needed. Each new backed-up values will immediately overwrite the old value. This method converges to $v_{\pi}$ faster than the above algorithm.
+  - ***Sweep***: this is how the backup is realized.
+  - ***Termination Point***: this decides the stopping critera of the algorithm. A typical condition is $max_{s\in \mathcal{S}}|v_{k+1}(s)-v_{k}(s)|$ is sufficiently small.
+
+
+
