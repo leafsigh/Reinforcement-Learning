@@ -10,4 +10,4 @@ N-Armed-Bandit.ipynb now has included the entire algorithms of this interesting 
 Future works on this script will focus on optimizing the performance and correct potential bugs.
 
 # Dynamic Programming
-Currently working on multiple dynamic programming algorithms.
+Currently working on multiple dynamic programming algorithms in MDPs.
