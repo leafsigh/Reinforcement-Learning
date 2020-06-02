@@ -1,5 +1,8 @@
-# Reinforcement_Learning
-Notes and projects are restored in this repo
+# Reinforcement Learning
+Study Notes and Codes are restored in here.
+Now working on 4.3 of *Reinforcement Learning: An Introduction*
+
+<a download="Reinforcement Learning Notes.md">Study Notes</a>
 
 # N-Armed-Bandit Problem
 N-Armed-Bandit.ipynb now has included the entire algorithms of this interesting problem.
