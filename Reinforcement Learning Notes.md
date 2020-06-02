@@ -614,5 +614,98 @@ $=\sum_{a\in\mathcal{A}}\pi(a|s)\sum_{r,s’}p(s’,r|s,a)(r+\gamma v_{\pi}(s'))
   - ***Sweep***: this is how the backup is realized.
   - ***Termination Point***: this decides the stopping critera of the algorithm. A typical condition is $max_{s\in \mathcal{S}}|v_{k+1}(s)-v_{k}(s)|$ is sufficiently small.
 
+Take a 4x4 grid-world game as an example. Settings are as followed:
+
+<img src="../../Reinforcement Learning/Reinforcement Learning Notes.assets/image-20200601100350768.png" alt="image-20200601100350768" style="zoom:33%;" />
+
+$\mathcal{S}=\{1,2,3,4,…,12,14\}$, $\mathcal{A}=\{up,down,left,right\}$, $\mathcal{R}=\{-1\}$ for all states and actions.
+
+***Then $p(s’,r|s,a)$ will be like as follow:***
+
+- $p(S_{t+1}=6,r=-1|S_t=5,left)=1$
+- $p(S_{t+1}=10,r=-1|S_t=5,right)=0$
+
+***All $\pi(a|s)$ will be the same (for now):***
+
+- $\pi(up|s)=\pi(down|s)=\pi(left|s)=\pi(right|s)=0.25$
+
+***Reward function is also the same for all states***:
+
+- $r(s’,a,s)=-1$
+
+<font color='darkkhaki'>**Specific example of applying Bellman Equation**</font>
+
+- Update $v_{k+1}$ from $v_k$ of the updating sequence, by Bellman Equation:
+
+  $v_{k+1}(s)=\sum_{a}\pi(a|s)\sum_{s’,r}p(s’,r|s,a)(r+\gamma v_k(s'))$
+
+  for example, **if we want to update the value-function of state 7 in the (k+1)th iteration, then we need value functions of all 14 states in the kth sequence.**
+
+  - $v_{k+1}(S_t=7)$
+
+    $=\pi(up|S_t=7)p(S_{t+1}=6|S_t=7,a_t=up)(-1+\gamma v_{k}(S_{t+1}=6))$               <font color='darkorange'>**(1)**</font> 
+
+    $+\pi(down|S_t=7)p(S_{t+1}=6|S_t=7,a_t=down)(-1+\gamma v_{k}(S_{t+1}=6))$      <font color='darkorange'>**(2)**</font>
+
+    $+\pi(left|S_t=7)p(S_{t+1}=6|S_t=7,a_t=left)(-1+\gamma v_{k}(S_{t+1}=6))$            <font color='orangered'>**(3)**</font>
+
+    $+\pi(right|S_t=7)p(S_{t+1}=6|S_t=7,a_t=right)(-1+\gamma v_{k}(S_{t+1}=6))$        <font color='darkorange'>**(4)**</font>
+
+    $+\pi(up|S_t=7)p(S_{t+1}=11|S_t=7,a_t=right)(-1+\gamma v_{k}(S_{t+1}=11))$        <font color='yellowgreen'>**(5)**</font>
+
+    $+\pi(down|S_t=7)p(S_{t+1}=11|S_t=7,a_t=down)(-1+\gamma v_{k}(S_{t+1}=11))$   <font color='olive'>**(6)**</font>
+
+    $+\pi(left|S_t=7)p(S_{t+1}=11|S_t=7,a_t=left)(-1+\gamma v_{k}(S_{t+1}=11))$        <font color='yellowgreen'>**(7)**</font>
+
+    $+\pi(right|S_t=7)p(S_{t+1}=11|S_t=7,a_t=right)(-1+\gamma v_{k}(S_{t+1}=11))$    <font color='yellowgreen'>**(8)**</font>
+
+    …...
+
+  - Bellman equation shows that we need to iterate all actions and all state-transfer-probabilities.
+
+    (1)~(4) iterates all actions with state7 to state6, state-transfer-prob$\ne$0 only in (3)
+
+    (5)~(8) iterates all actions with state7 to state11, state-transfer-prob$\ne$0 only in (6)
+
+  - Even though we need to iterate through all states ($S_{t+1}=1,2,3…,14$), actually, according to the graph above, only several states meet the state-transfer-prob$\ne$0 when $S_t=7$, they are 6,3 and 11.
+
+  
+
+**<font color='olive'>4.2 Policy Improvement</font>**
+
+Suppose we have determined the value function $v_{\pi}$ for an arbitrary deterministic policy $\pi$. For some state we would like to know whether or not we should change the policy to deterministically choose an action $a \ne \pi(s)$. 
+
+***One way to answer the question is to consider selecting $a$ in state $s$, and thereafter following the existent policy $\pi$***. <font color = 'gold'>***The value of this behaving is***</font>
+
+- $q_{\pi}(s,a)$
+
+  $=\mathbb{E}[G_{t+1}|S_t=s,A_t=a]$
+
+  $=\mathbb{E}[R_{t+1}+\gamma v_{\pi}(S_{t+1})|S_t=s,A_t=a]$
+
+  $=\sum_{s’,r}p(s’,r|s,a)(r+\gamma v_{\pi}(S_{t+1}))$
+
+- <font color='gold'>**The key is whether this is greater than**</font> $v_{\pi}(s)$.
+
+- **If $q_{\pi}(s,\pi’(s))\ge v_{\pi}(s)$, which means the value-function of an agent choosing a particular action follow a new policy $\pi’$ in state $s$, thereafter follow the old policy, is greater than the value-function follow the old policy $\pi$. Then we can say $v_{\pi’}(s)\ge v_{\pi}(s)$.**
+
+  - If $q_{\pi}(s,\pi’(s))\ge v_{\pi}(s)$, then $v_{\pi’}(s)\ge v_{\pi}(s)$.
+  - If $q_{\pi}(s,\pi’(s))\gt v_{\pi}(s)$, then $v_{\pi’}(s)\gt v_{\pi}(s)$.
+
+
+So far, we have only considered a particular action in a single state. To extend this to ***all states*** and ***all possible actions***, we need to select the actions at each state that appears to be the best according to $q_{\pi}(s,a)$, that is:
+
+- $\pi’(a|s)=argmax_{a}q_{\pi}(s,a)$
+
+  $=argmax_{a}\mathbb{E}[R_{t+1}+\gamma v_{\pi}(S_{t+1})|S_t=s,A_t=a]$
+
+  $=argmax_{a}\sum_{s’,r}p(s’,r|s,a)[r+\gamma v_{\pi}(s')]$
+
+  
+
+  
+
+
+
 
 
