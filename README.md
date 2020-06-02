@@ -12,4 +12,4 @@ Future works on this script will focus on optimizing the performance and correct
 # Dynamic Programming
 Currently working on multiple dynamic programming algorithms in MDPs.
 
-- Has finished 4x4 GridWorld Problem in 4.1 Policy Evaluation of *Reinforcement Learning: An Introduction*
+- Has finished nxn GridWorld Problem in 4.1 Policy Evaluation of *Reinforcement Learning: An Introduction*
