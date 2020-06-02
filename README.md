@@ -2,7 +2,7 @@
 Study Notes and Codes are restored in here.
 Now working on 4.3 of *Reinforcement Learning: An Introduction*
 
-<a download="Reinforcement Learning Notes.md" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/Reinforcement%20Learning%20Notes.md'>Study Notes</a>
+<a download="Reinforcement Learning Notes.md" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/Reinforcement%20Learning%20Notes.md'>Download Study Notes</a>
 
 # N-Armed-Bandit Problem
 N-Armed-Bandit.ipynb now has included the entire algorithms of this interesting problem.
