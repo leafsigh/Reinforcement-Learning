@@ -4,7 +4,7 @@
 
 **[Resource2: An Outsider’s Tour of Reinforcement Learning](http://www.argmin.net/2018/06/25/outsider-rl/)**
 
-
+<img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
 
 #### <font color='seagreen'> Basic Notations and Elements</font>
 
