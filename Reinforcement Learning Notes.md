@@ -701,8 +701,68 @@ So far, we have only considered a particular action in a single state. To extend
 
   $=argmax_{a}\sum_{s’,r}p(s’,r|s,a)[r+\gamma v_{\pi}(s')]$
 
-  
+  - This process of making a new policy than improves on an original policy, by making it greedy w.r.t the value function of the original policy is called ***policy improvement***.
 
+  
+  
+  **<font color='olive'>4.3 Policy Iteration</font>**
+  
+  Once a policy, $\pi$, has been improved using $v_{\pi}(s)$ to yield a better policy, $\pi'$, we can then compute $v_{\pi’}(s)$ and improve it again to yield an even better $\pi''$.
+  
+  $\pi_0 \rightarrow^{E} v_{\pi_{0}} \rightarrow^{I} \pi_1 \rightarrow^{E}v_{\pi_1}\rightarrow^{I}\pi_2\rightarrow^{E} v_{\pi_2}…\rightarrow^{I}\pi_{*}\rightarrow^{E}v_{*}$
+  
+  Where $\rightarrow^{E}$ denotes the evaluation process, $\rightarrow^{I}$ denotes the Improvement process.
+  
+  The gridworld game in 4.1 is actually <font color='steelblue'>**one iterative evaluation**</font> ($\pi_0 \rightarrow^{E} v_{\pi_{0}}$) phrase in the above iterative chain. 
+  
+  <font color='mediumvioletred'>***Algortithm of Policy Iteration***</font>:
+  
+  ------
+  
+  - ***1.Initialization***
+  
+  $V(s)\in \mathbb{R}$ and $\pi(s)\in \mathcal{A}(s)$ for all $s\in\mathcal{S}$
+  
+  - ***2. Policy Evaluation***
+  
+    Repeat 
+  
+    ​	$\Delta \leftarrow 0$
+  
+    ​	For each $s \in \mathcal{S}$
+  
+    ​		$v\leftarrow V(s)$
+  
+    ​		$V(s)\leftarrow \sum_{s’,r}p(s’,r|s,\pi(s))(r+\gamma V(s'))$
+  
+    ​		$\Delta \leftarrow max|\Delta,v-V(s)|$
+  
+    Until $\Delta \le \theta$, where $\theta$ is a samll positive number.
+  
+  - ***3. Policy Improvement***
+  
+    $Policy-Stable\leftarrow True$
+  
+    For each $s\in \mathcal{S}$
+  
+    ​	$a\leftarrow \pi(s)$
+  
+    ​	$\pi(s)\leftarrow argmax_{a}\sum_{s’,r}p(s’,r|s,a)(r+\gamma V(s'))$
+  
+    ​	If $a\ne\pi(s)$, then $Policy-Stable\leftarrow False$
+  
+    If $Policy-Stable==True$, return $V,\pi$.
+  
+    Else go back to ***2.***
+  
+  ------
+  
+  <font color='coral'>**Note that each policy evaluation, itself an iterative computation, is started with the value function for the previous policy.**</font>
+  
+  
+  
+  
+  
   
 
 
