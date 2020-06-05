@@ -7,6 +7,8 @@
 
 [强化学习从入门到放弃](https://github.com/wwxFromTju/awesome-reinforcement-learning-zh)
 
+[OpenAI DeepRL Courses](https://spinningup.openai.com/en/latest/)
+
 
 # Study Notes and Codes
 
