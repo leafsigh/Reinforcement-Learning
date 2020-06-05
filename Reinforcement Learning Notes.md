@@ -715,6 +715,8 @@ So far, we have only considered a particular action in a single state. To extend
   
   The gridworld game in 4.1 is actually <font color='steelblue'>**one iterative evaluation**</font> ($\pi_0 \rightarrow^{E} v_{\pi_{0}}$) phrase in the above iterative chain. 
   
+  
+  
   <font color='mediumvioletred'>***Algortithm of Policy Iteration***</font>:
   
   ------
