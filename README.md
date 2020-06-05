@@ -22,3 +22,6 @@ Future works on this script will focus on optimizing the performance and correct
 Currently working on multiple dynamic programming algorithms in MDPs.
 
 - Has finished nxn GridWorld Problem in 4.1 Policy Evaluation of *Reinforcement Learning: An Introduction*
+
+# Policy Iteration
+Currently working on Car Rental problem by Policy Iteration
