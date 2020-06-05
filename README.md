@@ -1,7 +1,10 @@
 # Reinforcement Learning Resources
 [Lectures, Books, Surveys and Thesis of Reinforcement Learning](https://github.com/aikorea/awesome-rl)
+
 [An Outsider’s Tour of Reinforcement Learning](http://www.argmin.net/2018/06/25/outsider-rl/)
+
 [Reinforcement Learning](https://github.com/RL-Research-Cohiba/Reinforcement_Learning)
+
 [强化学习从入门到放弃](https://github.com/wwxFromTju/awesome-reinforcement-learning-zh)
 
 
