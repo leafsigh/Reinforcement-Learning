@@ -9,6 +9,7 @@
 
 [OpenAI DeepRL Courses](https://spinningup.openai.com/en/latest/)
 
+[Dynamic Programming Problems](https://blog.usejournal.com/top-50-dynamic-programming-practice-problems-4208fed71aa3)
 
 # Study Notes and Codes
 
