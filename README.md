@@ -2,7 +2,7 @@
 Study Notes and Codes are stored here.
 Now working on Chapter5 Monte Carlo Method of *Reinforcement Learning: An Introduction*
 
-Some Coded Problems
+Notes & Some Coded Problems
 
 <a download="Reinforcement Learning Notes.md" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master'>Study Notes</a>
 
@@ -23,5 +23,5 @@ Future works on this script will focus on optimizing the performance and correct
 # Dynamic Programming
 Currently working on multiple dynamic programming algorithms in MDPs.
 
-- Has finished nxn GridWorld Problem in 4.1 Policy Evaluation of *Reinforcement Learning: An Introduction*
-- Currently working on Car Rental problem by Policy Iteration
+- Has finished **NxN GridWorld Problem** in 4.1 Policy Evaluation of *Reinforcement Learning: An Introduction*
+- Currently working on **Car Rental problem by Policy Iteration**
