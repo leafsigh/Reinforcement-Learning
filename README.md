@@ -8,7 +8,7 @@ Now working on 4.3 of *Reinforcement Learning: An Introduction*
 
 <a download="GridWorld_DP.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/GridWorld_DP.ipynb'>GridWorld Code</a>
 
-<a download="CarRental_PolicyIteration.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/Policy_Iteration-Car_Rental_Problem%20.ipynb'>GridWorld Code</a>
+<a download="CarRental_PolicyIteration.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/Policy_Iteration-Car_Rental_Problem%20.ipynb'>CarRental Policy Iteration</a>
 
 # N-Armed-Bandit Problem
 N-Armed-Bandit.ipynb now has included the entire algorithms of this interesting problem.
