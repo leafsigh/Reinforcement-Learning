@@ -1,8 +1,13 @@
-# Reinforcement Learning
-Study Notes and Codes are stored here.
-Now working on Chapter5 Monte Carlo Method of *Reinforcement Learning: An Introduction*
+# Reinforcement Learning Resources
+[Lectures, Books, Surveys and Thesis of Reinforcement Learning](https://github.com/aikorea/awesome-rl)
+[An Outsider’s Tour of Reinforcement Learning](http://www.argmin.net/2018/06/25/outsider-rl/)
+[Reinforcement Learning](https://github.com/RL-Research-Cohiba/Reinforcement_Learning)
+[强化学习从入门到放弃](https://github.com/wwxFromTju/awesome-reinforcement-learning-zh)
 
-Notes & Some Coded Problems
+
+# Study Notes and Codes
+
+Now working on Chapter5 Monte Carlo Method of *Reinforcement Learning: An Introduction*
 
 <a download="Reinforcement Learning Notes.md" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master'>Study Notes</a>
 
