@@ -4,6 +4,10 @@
 
 **[Resource2: An Outsider’s Tour of Reinforcement Learning](http://www.argmin.net/2018/06/25/outsider-rl/)**
 
+**[Resource3: Reinforcement Learning](https://github.com/RL-Research-Cohiba/Reinforcement_Learning)**
+
+**[强化学习从入门到放弃](https://github.com/wwxFromTju/awesome-reinforcement-learning-zh)**
+
 
 
 #### <font color='seagreen'> Basic Notations and Elements</font>
@@ -20,9 +24,9 @@ Some RF methods don’t necessarily require to search for value functions, for e
 
 
 
-#### <font color='seagreen'>Evaluative Feedback</font>
+#### <font color='seagreen'>Chapter 2. Evaluative Feedback</font>
 
-**<font color='olive'>N-armed Bandit Problem</font>**
+**<font color='olive'>2.1 N-armed Bandit Problem</font>**
 
 - **Denotions**
   - *value*: expected or mean reward given a selected action
@@ -34,7 +38,7 @@ Some RF methods don’t necessarily require to search for value functions, for e
 
 
 
-**<font color='olive'>Action-Value Methods</font>**
+**<font color='olive'>2.2 Action-Value Methods</font>**
 
 - **Denotions**
 
@@ -68,13 +72,11 @@ Some RF methods don’t necessarily require to search for value functions, for e
 
 The code has been recaptured by myself. Here are the analytical results of $\epsilon$-greedy mrthods.
 
-![epsilon_method](Reinforcement Learning Notes.assets/epsilon_method-9526924.png)
+![epsilon_method](Reinforcement Learning Notes.assets/epsilon_method-9526924-1610123.png)
 
 the above image depicts the total reward accumulated under different $\epsilon$ with 50 games, and 4000 rounds in each game.
 
-![optimal_action](Reinforcement Learning Notes.assets/optimal_action.png)
-
-This image depicts the optimal action’s accumulated reward. Other parameters setting is the same.
+![optimal_action](Reinforcement Learning Notes.assets/optimal_action-1610123.png)
 
 This image depicts the optimal action’s accumulated reward. Other parameters setting is the same.
 
@@ -88,7 +90,7 @@ This image depicts the optimal action’s accumulated reward. Other parameters s
 
   
 
-**<font color='olive'>Softmax Action Selection</font>**
+**<font color='olive'>2.3 Softmax Action Selection</font>**
 
 The probability of choosing each action now is given by a softmax method. The common method uses Gibbs or Boltzmann distribution.
 
@@ -103,7 +105,7 @@ Whether <font color='steelblue'> epsilon-greedy</font> or <font color='steelblue
 
 
 
-**<font color='olive'>Evaluations Versus Instructions</font>**
+**<font color='olive'>2.3 Evaluations Versus Instructions</font>**
 
 - The reward received after each action gives some information about how good the action was, but it **says nothing at all about whether the action was correct or incorrect, that is, about whether or not it was best**
 - RL sharply contrasts with supervised learning. **In supervised learning, there is no need to try various actions.** Feedback from the environment directly indicates what the action should have been. **Feedback is independently of actions taken.**
@@ -124,7 +126,7 @@ Whether <font color='steelblue'> epsilon-greedy</font> or <font color='steelblue
 
 
 
-**<font color='olive'>Incremental Implementation</font>**
+**<font color='olive'>2.4 Incremental Implementation</font>**
 
 The action-value methods mentioned above use sample average to estimate action values:
 
@@ -163,7 +165,7 @@ When $\alpha=\frac{1}{k}$, then this is the sample average method.
 
 
 
-**<font color='olive'>Tracking a Nonstationary Problem</font>**
+**<font color='olive'>2.5 Tracking a Nonstationary Problem</font>**
 
 The above method is appropriate for stationary environment. For nonstationary environment, we can make $\alpha$ equal to a constant. **When $\alpha=constant$, the recent rewards will be given more weights than those past rewards.**
 
@@ -283,6 +285,8 @@ $\frac{\partial\mathbb{E}[R_t]}{H_{t}(a)} = \frac{\partial\sum_{b}^{n}q(b)\pi(b)
 
 
 
+
+
 #### <font color='seagreen'>Chapter 3. Finite Markov Decision Process</font>
 
 **<font color='olive'>3.1 The Agent-Environment Interface</font>**
@@ -362,8 +366,6 @@ $G_{t}=\sum_{k=0}^{T-t-1}\gamma^{k}R_{t+k+1}$
 
 
 
-
-
 **<font color='olive'>3.5 The Markov Property</font>**
 
 - ***State Signal***:
@@ -416,10 +418,7 @@ Given the dynamic state specified by (3.6), one can compute any anything else of
 
   $r(s’,a,s)=\mathbb{E}[R_{t+1}|S_{t+1}=s’,S_t=s,A_t=a]= \sum_{r\in \mathcal{R}}rp(r|s’,a,s) =\frac{\sum_{r\in R} p(s’,r|s,a)}{p(s’|s,a)}$
 
-
-
-
-
+  
 
 **<font color='olive'>3.7 Value Functions</font>**
 
@@ -517,7 +516,7 @@ Recall that a policy $\pi$, is a mapping from each state $s\in \mathcal{S}$, and
 
 - **<font color='deepskyblue'>The value of a state under an optimal policy must equal the expected return for the best action from that state</font>**
 
--  ***Bellman Optimality Equation*** for $v_{*}$  (3.16 and 3.17)
+- ***Bellman Optimality Equation*** for $v_{*}$  (3.16 and 3.17)
 
   $v_{*}(s) = max_{a\in \mathcal{A}(s)}q_{\pi_{*}}(s,a)$
 
@@ -531,21 +530,25 @@ Recall that a policy $\pi$, is a mapping from each state $s\in \mathcal{S}$, and
 
   $=max_{a\in \mathcal{A}(s)}\sum_{s’,r}p(s’,r|s,a)(r+\gamma v_{*}(s'))$                  （3.17）
 
--  ***Bellman Optimality Equation*** for $q_{*}$
+- ***Bellman Optimality Equation*** for $q_{*}$
 
   $q_{*}(s,a) = \mathbb{E}_{\pi_{*}}[R_{t+1}+\gamma \mathcal{max}_{a’}q_{*}(S_{t+1},a’)|S_t=s,A_t=a]$
 
   $=\sum_{s’,r}p(s’,r|s,a)(r+\gamma max_{a’}q_{*}(s’,a'))$
-  
+
+**<font color='red'>Always remember that upper case letter doesn’t have actual value, it just stands for a denotion. Only when R_t+1=r, or S_t+1=s’, means that denotion has actual value taken.</font>**
+
 - ***Backup Diagram Corresponding to above Bellman Optimality Equation***
 
-  <img src="../../Reinforcement Learning/Reinforcement Learning Notes.assets/image-20200525174802212.png" alt="image-20200525174802212" style="zoom:33%;" />
+<img src="../../Reinforcement Learning/Reinforcement Learning Notes.assets/image-20200525174802212.png" alt="image-20200525174802212" style="zoom:33%;" />
 
 - ***For finite MDPs, the Bellman Optimality (3.17) has a unique solution independent of the policy. The Bellman Optimality is actually a system of equations, one for each state. So if there are N states, there will be N equations in N unknowns.***
 
 <font color='darkseagreen'>**Once one has**</font> $v_{*}$,<font color='darkseagreen'> **it is relatively easy to determine an optimal policy**</font>. For each state $s$, there will be one or more actions at which the maximum is obtained in the Bellman optimality equation. Any policy that assigns non-zero probability only to these actions is an optimal policy. You can think of this as a one-step search. If you have the optimal value function, $v_{*}$, then the actions that appear best after a one-step search will be optimal actions. Another way of saying this is that any policy that is greedy with respect to the optimal evaluation function $v_{*}$ is an optimal policy.
 
 <font color='darkseagreen'>**Having**</font> $q_{*}$<font color='darkseagreen'> **makes choosing optimal policy still easier. **</font>With $q_{*}$, the agent does not even have to do a one-step-ahead search: for any state $s$, it can simply find any action that maximizes $q_{*}(s,a)$. The action-value function eectively catches the results of all one-step-ahead searches. It provides the optimal expected long-term return as a value that is locally and immediately available for each state-action pair.
+
+
 
 
 
@@ -701,73 +704,164 @@ So far, we have only considered a particular action in a single state. To extend
 
   $=argmax_{a}\sum_{s’,r}p(s’,r|s,a)[r+\gamma v_{\pi}(s')]$
 
-  - This process of making a new policy than improves on an original policy, by making it greedy w.r.t the value function of the original policy is called ***policy improvement***.
-
-  
-  
-  **<font color='olive'>4.3 Policy Iteration</font>**
-  
-  Once a policy, $\pi$, has been improved using $v_{\pi}(s)$ to yield a better policy, $\pi'$, we can then compute $v_{\pi’}(s)$ and improve it again to yield an even better $\pi''$.
-  
-  $\pi_0 \rightarrow^{E} v_{\pi_{0}} \rightarrow^{I} \pi_1 \rightarrow^{E}v_{\pi_1}\rightarrow^{I}\pi_2\rightarrow^{E} v_{\pi_2}…\rightarrow^{I}\pi_{*}\rightarrow^{E}v_{*}$
-  
-  Where $\rightarrow^{E}$ denotes the evaluation process, $\rightarrow^{I}$ denotes the Improvement process.
-  
-  The gridworld game in 4.1 is actually <font color='steelblue'>**one iterative evaluation**</font> ($\pi_0 \rightarrow^{E} v_{\pi_{0}}$) phrase in the above iterative chain. 
-  
-  
-  
-  <font color='mediumvioletred'>***Algortithm of Policy Iteration***</font>:
-  
-  ------
-  
-  - ***1.Initialization***
-  
-  $V(s)\in \mathbb{R}$ and $\pi(s)\in \mathcal{A}(s)$ for all $s\in\mathcal{S}$
-  
-  - ***2. Policy Evaluation***
-  
-    Repeat 
-  
-    ​	$\Delta \leftarrow 0$
-  
-    ​	For each $s \in \mathcal{S}$
-  
-    ​		$v\leftarrow V(s)$
-  
-    ​		$V(s)\leftarrow \sum_{s’,r}p(s’,r|s,\pi(s))(r+\gamma V(s'))$
-  
-    ​		$\Delta \leftarrow max|\Delta,v-V(s)|$
-  
-    Until $\Delta \le \theta$, where $\theta$ is a samll positive number.
-  
-  - ***3. Policy Improvement***
-  
-    $Policy-Stable\leftarrow True$
-  
-    For each $s\in \mathcal{S}$
-  
-    ​	$a\leftarrow \pi(s)$
-  
-    ​	$\pi(s)\leftarrow argmax_{a}\sum_{s’,r}p(s’,r|s,a)(r+\gamma V(s'))$
-  
-    ​	If $a\ne\pi(s)$, then $Policy-Stable\leftarrow False$
-  
-    If $Policy-Stable==True$, return $V,\pi$.
-  
-    Else go back to ***2.***
-  
-  ------
-  
-  <font color='coral'>**Note that each policy evaluation, itself an iterative computation, is started with the value function for the previous policy.**</font>
-  
-  
-  
-  
-  
-  
+  This process of making a new policy than improves on an original policy, by making it greedy w.r.t the value function of the original policy is called ***policy improvement***.
 
 
 
+**<font color='olive'>4.3 Policy Iteration</font>**
 
+Once a policy, $\pi$, has been improved using $v_{\pi}(s)$ to yield a better policy, $\pi'$, we can then compute $v_{\pi’}(s)$ and improve it again to yield an even better $\pi''$.
+
+$\pi_0 \rightarrow^{E} v_{\pi_{0}} \rightarrow^{I} \pi_1 \rightarrow^{E}v_{\pi_1}\rightarrow^{I}\pi_2\rightarrow^{E} v_{\pi_2}…\rightarrow^{I}\pi_{*}\rightarrow^{E}v_{*}$
+
+Where $\rightarrow^{E}$ denotes the evaluation process, $\rightarrow^{I}$ denotes the Improvement process.
+
+The gridworld game in 4.1 is actually <font color='steelblue'>**one iterative evaluation**</font> ($\pi_0 \rightarrow^{E} v_{\pi_{0}}$) phrase in the above iterative chain. 
+
+
+
+<font color='mediumvioletred'>***Algortithm of Policy Iteration***</font>:
+
+------
+
+- ***1.Initialization***
+
+$V(s)\in \mathbb{R}$ and $\pi(s)\in \mathcal{A}(s)$ for all $s\in\mathcal{S}$
+
+- ***2. Policy Evaluation***
+
+  Repeat 
+
+  ​	$\Delta \leftarrow 0$
+
+  ​	For each $s \in \mathcal{S}$
+
+  ​		$v\leftarrow V(s)$
+
+  ​		$V(s)\leftarrow \sum_{s’,r}p(s’,r|s,\pi(s))(r+\gamma V(s'))$
+
+  ​		$\Delta \leftarrow max(\Delta,|v-V(s)|)$
+
+  Until $\Delta \le \theta$, where $\theta$ is a small positive number.
+
+- ***3. Policy Improvement***
+
+  $Policy-Stable\leftarrow True$
+
+  For each $s\in \mathcal{S}$
+
+  ​	$a\leftarrow \pi(s)$
+
+  ​	$\pi(s)\leftarrow argmax_{a}\sum_{s’,r}p(s’,r|s,a)(r+\gamma V(s'))$
+
+  ​	If $a\ne\pi(s)$, then $Policy-Stable\leftarrow False$
+
+  If $Policy-Stable==True$, return $V,\pi$.
+
+  Else go back to ***2.***
+
+------
+
+<font color='coral'>**Note that each policy evaluation, itself an iterative computation, is started with the value function for the previous policy.**</font>
+
+
+
+**<font color='olive'>4.4 Value Iteration</font>**
+
+One drawback of Policy Iteration is that each iteration contains a procedure of policy evaluation, which may itself be a protracted iterative computation requiring multiple sweeps through the state set.
+
+But we don’t have to wait for policy evaluation convergence to improve policy. In the GridWorld problem, policy evaluation beyond k=3 has no influence on greedy policy.
+
+<font color='gold'>**It may be possible to truncate policy evaluation, without losing the convergence guarantees of policy iteration. The algorithm is called *Value Iteration***</font>
+
+It can be written as a particularly simple backup operation that combines the policy improvement and truncated policy evaluation:
+
+- $v_{k+1}(s) = max_{a}\mathbb{E}[R_{t+1}+\gamma v_{k}(S_{t+1})|S_t=s,A_t=a]$
+
+  $=max_{a}\sum_{s’,r}p(s’,r|s,a)(r+\gamma v_{k}(s'))$
+
+  
+
+<font color='mediumvioletred'>***Algortithm of Value Iteration***</font>:
+
+------
+
+- ***1. Initialization***
+
+  Initialize array $V$ arbitrarily. e.g., $V(s)=0$ for all $s\in \mathcal{S}$.
+
+- ***2. Truncated Evaluation***
+
+  Repeat
+
+  ​	$\Delta=0$
+
+  ​	For each $s\in \mathcal{S}$ 
+
+  ​		$v\leftarrow V(s)$
+
+  ​		$V(s)=max_{a}\sum_{r,s’}p(s’,r)(r+\gamma V(s'))$
+
+  ​		$\Delta=max(\Delta,|v-V(s)|)$
+
+  Until $\Delta\le\theta$, where $\theta$ is a small positive number.
+
+- ***3. Policy Improvement***
+
+  Output a deterministic policy $\pi$ such that
+
+  $\pi(s)=argmax_{a}\sum_{r,s’}p(s’,r|s,a)[r+\gamma V(s')]$
+
+------
+
+
+
+
+
+**<font color='olive'>4.5 Asynchronous Dynamic Programming</font>**
+
+A major drawback to the DP methods is that it involves the entire operation through the whole set of states. If the state is very large, then go through all states will be prohibitively expensive.
+
+***Asynchronous DP*** are in place DP.
+
+<font color = 'gold'>**This algorithm backs up the values of each state in any order whatsoever , using whatever values of other states happen to be available.**</font>
+
+- in GridWorld problem, the DP backs up values of all states simultaneously, all states are updated in-time.
+- If there is a problem that we cannot get the values of **all** states, we can use asynchronous DP.
+
+
+
+**<font color='olive'>4.6 Generalized Policy Iteration</font>**
+
+...
+
+
+
+
+
+#### <font color='seagreen'>Chapter 5. Monte Carlo Methods</font>
+
+**<font color='olive'>5.1 Generalized Policy Iteration</font>**
+
+<font color = 'darkkhaki'>**All Monte Carlo Methods are based on the idea that:**</font>
+
+- the average returns (rewards) should converge to the expected value
+
+<font color = 'plum'>**First-visit MC and Every-visit MC**</font>
+
+- suppose we wish to estimate $v_{\pi}(s)$, given a set of episodes by following $\pi$ and passing through $s$. Each occurrence of state $s$ in an episode is called a ***visit***
+- ***First-visit MC method*** estimates $v_{\pi}(s)$ as the average of the returns following first visits to $s$
+- ***Every-visit MC method*** estimates $v_{\pi}(s)$ by all visits to $s$
+
+<font color='deepskyblue'>**Comparison between Dynamic Programming and Monte Carlo Method**</font>
+
+- Dynamic programming requires a **complete knowledge of the environment or all possible transitions**, whereas Monte Carlo methods work on a **sampled state-action trajectory on one episode**. 
+
+- DP includes only one-step transition, whereas MC goes all the way to the end of the episode to the terminal node. 
+- One important fact about the MC method is that the estimates for each state are **independent**, which means the estimate for one state does not build upon the estimate of any other state, as in the case of DP.
+- In particular, note that the **computational expense of estimating the value of a single state is independent of the number of states.** This can make Monte Carlo methods particularly attractive when one requires the value of only one or a subset of states. One can generate many sample episodes starting from the states of interest, averaging returns from only these states ignoring all others.
+
+
+
+**<font color='olive'>5.2 Monte Carlo Estimation of Action Values</font>**
 
