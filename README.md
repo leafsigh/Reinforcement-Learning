@@ -16,7 +16,7 @@
 Now working on Chapter5 Monte Carlo Method of *Reinforcement Learning: An Introduction*
 
 <a download="Reinforcement Learning Notes.md" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/Reinforcement-Learning-Notes.ipynb'>Study Notes</a>
-- Images and colored texts cannot show correctly on Github. Please copy the above link into [nbviewer](https://github.com/leafsigh/Reinforcement_Learning/blob/master/Reinforcement-Learning-Notes.ipynb) to get a correct view.
+- Images and colored texts cannot show correctly on Github. Please copy the above link into [nbviewer](https://nbviewer.jupyter.org) to get a correct view.
 
 <a download="N_armed bandit.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/N_armed%20bandit.ipynb'>N-Armed-Bandit Code</a>
 
