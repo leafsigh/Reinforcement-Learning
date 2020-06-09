@@ -20,9 +20,11 @@ Now working on Chapter5 Monte Carlo Method of *Reinforcement Learning: An Introd
 
 <a download="N_armed bandit.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/N_armed%20bandit.ipynb'>N-Armed-Bandit Code</a>
 
-<a download="GridWorld_DP.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/GridWorld_DP.ipynb'>NxN GridWorld Code</a>
+<a download="GridWorld_DP.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/GridWorld_DP.ipynb'>NxN GridWorld Code (Only contain one-step policy evaluation)</a>
 
-<a download="CarRental_PolicyIteration.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/Policy_Iteration-Car_Rental_Problem%20.ipynb'>CarRental Policy Iteration (not finished)</a>
+<a download="GridWorld_by_PolicyIteration.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/GridWorld_by_PolicyIteration.ipynb'>NxN GridWorld (by Policy Iteration)</a>
+
+<a download="CarRental_PolicyIteration.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/Policy_Iteration-Car_Rental_Problem%20.ipynb'>CarRental Policy Iteration (still working on it)</a>
 
 # N-Armed-Bandit Problem
 N-Armed-Bandit.ipynb now has included the entire algorithms of this interesting problem.
