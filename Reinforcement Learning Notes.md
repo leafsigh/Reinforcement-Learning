@@ -865,3 +865,106 @@ A major drawback to the DP methods is that it involves the entire operation thro
 
 **<font color='olive'>5.2 Monte Carlo Estimation of Action Values</font>**
 
+If a model is available, then with a model, state values are sufficient for determining policy. Just like the way I did in `GridWorld_by_PolicyIteration`.
+
+<font color='steelblue'>**Without a model, state values are not sufficient. One must explicitly estimate each action value in order for values to be useful in suggesting a policy.**</font>
+
+<font color='steelblue'>**Thus, one of our primary goal is to estimate**</font> $q_{*}$
+
+To achieve this, we need to first consider the policy evaluation in Monte Carlo Method.
+
+- The policy evaluation problem is to estimate $q_{\pi}(s,a)$
+- Instead of estimating state values ($v_{\pi}(s)$), we are now estimating **values of state-action pair**.
+- **One serious problem is that some of state-action pairs may never be visited. If the policy $\pi$ is deterministic (prob=1 for one action and prob=0 for all others), many state-action values cannot be estimated.**
+  - To solve this problem, ***maintaining exploration***, as discussed in n-armed bandit problem.
+  - One way to do this is to specify the episode starts in a state-action pair, and every pair has a non-zero prob. to be selected. (***Exploring Starts***) (not work if we need actual interaction with environment)
+  - Another way is to ***only consider policies that are stochastic with a non-zero prob. of selecting all actions in each state.***
+
+
+
+**<font color='olive'>5.3 Monte Carlo Control</font>**
+
+Consider a Monte Carlo version of classical Policy Iteration step:
+
+- start with an arbitrary policy $\pi_{0}$, end with optimal policy $\pi_{*}$ and optimal action-value function $q_{*}$
+
+  $\pi_{0}\rightarrow^{E} q_{0}\rightarrow^{I}\pi_{1}\rightarrow^{E}q_{1}…\rightarrow^{I}\pi_{*}\rightarrow^{E}q_{*}$
+
+- <font color='darkmagenta'>**Policy evaluations are done exactly as preceding sections**</font>
+
+- <font color='darkmagenta'>**Policy improvement is done by making policy greedy with respect to the current value fucntion. In this case we have an action-value function, therefore no model is needed to construct greedy policy.**</font>
+
+  - 1. For any action-value function $q$, the corresponding greedy policy is, for each $s\in \mathcal{S}$, deterministically choose an action with maximal action value:
+
+       $\pi_{s}=argmax_{a}q(s,a)$
+
+    2. Policy improvement then can be done by constructing each $\pi_{k+1}$ as the greedy policy with respect to $q_{\pi_{k}}$.
+
+       $q_{\pi_{k}}(s,\pi_{k+1}(s))=q_{\pi_{k}}(s,argmax_{a}q_{\pi_{k}}(s,a))$
+
+       $=max_{a}q_{\pi_{k}}(s,a)$
+
+       $\ge q_{\pi_{k}}(s,\pi_{k}(s))$
+
+       $=v_{\pi_{k}}(s)$
+
+  - The theorem assures each $\pi_{k+1}$ is uniformly better than or as good as $\pi_{k}$
+
+
+
+<font color='mediumvioletred'>***Algortithm of Monte Carlo ES***</font>:
+
+------
+
+- ***1. Initialization***
+
+  for all $s\in\mathcal{S}$, $a\in\mathcal{A(s)}$:
+
+  ​	$Q(s,a)\leftarrow arbitrary$
+
+  ​	$\pi(s)\leftarrow arbitrary$
+
+  ​	$Returns(s,a)\leftarrow$ empty list
+
+- ***2. Repeat Forever***
+
+  Choose $S_0 \in \mathcal{S}$, $A_0 \in \mathcal{A}(S_0)$ s.t. all pairs have probabilities>0.
+
+  Generate an episode start from $S_0,A_0$, following policy $\pi$
+
+  For each pair $s,a$ appearing in the episode:
+
+  ​	$G\leftarrow$return following the first occurence of $s,a$
+
+  ​	Append $G$ to returns $Return(s,a)$
+
+  ​	$Q(s,a)\leftarrow Average(Returns(s,a))$
+
+  For each $s$ in the episode:
+
+  ​	$\pi(s)\leftarrow argmax_{a}Q(s,a)$
+
+------
+
+
+
+**<font color='olive'>5.4 Monte Carlo Control Without Exploring Starts</font>**
+
+<font color='peru'>**How to avoid the impossible assumption of *Exploring Starts***</font>
+
+- Way1: On-policy Method
+  - attempt to evaluate or improve the policy that makes decisions
+- Way2: Off-policy Method
+  - attempt to evaluate or improve the policy different from that is used to generate data
+
+
+
+<font color='maroon'>**On-policy Method**</font>:
+
+- ***Soft***, meaning that $\pi(a|s)>0$ for all $s\in \mathcal{S}$ and $a\in \mathcal{A}(s)$, but gradually shifted closer and closer to a deterministic policy.
+- Many methods in *n-armed bandit* problem are on-policy method. ($\epsilon-$Greedy, softmax, UCB, gradient ascent)
+- ***$\epsilon$-soft Method***: defined as policies for which $\pi(a|s)\ge \frac{\epsilon}{|\mathcal{A}(s)|}$ for all states and actions, for $\epsilon >0$
+
+- $\epsilon$-greedy method is a typical method of $\epsilon$***-soft*** method. In general ***$\epsilon$-soft*** method, all nongreedy actions are given the minimal probability of $\frac{\epsilon}{|\mathcal{A}(s)|}$.
+- Remaining bulk of probability, $1-\epsilon+\frac{\epsilon}{|\mathcal{A}(s)|}$ is given to the greedy action.
+
