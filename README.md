@@ -26,6 +26,11 @@ Now working on Chapter5 Monte Carlo Method of *Reinforcement Learning: An Introd
 
 <a download="CarRental_PolicyIteration.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/Policy_Iteration-Car_Rental_Problem%20.ipynb'>CarRental Policy Iteration (still working on it)</a>
 
+<a download="BlackJack_MonteCarlo.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/BlackJack_by_MonteCarlo.ipynb'>BlackJack by Monte Carlo (has finished policy evaluation part)</a>
+
+# Study Note
+- The study note of *Reinforcement Learning: An Introduction*. Contents in .md and .ipynb are the same.
+
 # N-Armed-Bandit Problem
 N-Armed-Bandit.ipynb now has included the entire algorithms of this interesting problem.
 - 4 action selelcting algorithms: epsilon-greedy, softmax, upper bound confidence (UCB) and gradient ascent (preference estimation).
@@ -33,9 +38,17 @@ N-Armed-Bandit.ipynb now has included the entire algorithms of this interesting 
 - 2 initial value setup methods: add baseline and setup burning period.
 
 Future works on this script will focus on optimizing the performance and correcting potential bugs.
+Solutions by `Gym` will be added later.
 
-# Dynamic Programming
-Currently working on multiple dynamic programming algorithms in MDPs.
+# GridWorld Problem
+- Size of the GridWorld can be changed at will. To get the same result as *Reinforcement Learning: An Introduction*, change n=4.
+- The GridWorld_DP.ipynb only contains the **policy evaluation**.
+- The GridWorld_by_PolicyIteration.ipynb contains completer **policy iteration** procedure. **Value iteration** is a special case in **policy iteration**, which can be adapted by the code.
 
-- Has finished **NxN GridWorld Problem** in 4.1 Policy Evaluation of *Reinforcement Learning: An Introduction*
-- Currently working on **Car Rental problem by Policy Iteration**
+Future works will focus on optimizing the efficiency and adding visualization.
+Solutions by `Gym` will be added later.
+
+# BlackJack
+- The BlackJack problem is soluted by **Monte Carlo Method**.
+- Has finished the policy evaluation part. Currently working on policy improvement.
+- Solutions by `Gym` will be added later.
