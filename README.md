@@ -52,4 +52,4 @@ Solutions by `Gym` will be added later.
 - The BlackJack problem is soluted by **Monte Carlo Method**.
 - Has finished the policy evaluation part. Currently working on policy improvement.
 - Solutions by `Gym` will be added later.
-![Monte Carlo Evaluation]("https://github.com/leafsigh/Reinforcement-Learning/blob/master/BlackJack_Visualization/png_to_gif.gif")
+![Monte Carlo Evaluation](https://github.com/leafsigh/Reinforcement-Learning/blob/master/BlackJack_Visualization/png_to_gif.gif)
