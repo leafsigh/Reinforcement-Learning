@@ -482,6 +482,10 @@ Recall that a policy $\pi$, is a mapping from each state $s\in \mathcal{S}$, and
 
   This equation is called ***Bellman Equation*** for $v_{\pi}(s)$, it expresses a relationship between the value of a state and the values of its successor states.
 
+- The ***Bellman Equation*** for $q(s,a)$ has the similar form, but the only difference is that action has been deterministic. We use $a_{det}$ to represent the deterministic action. The ***Bellman Equation*** for $q(s,a)$ goes like:
+
+  $q_{\pi}(s,a)=\sum_{s’,r}p(s’,r|s,a_{det})(r+\gamma\sum_{a}\pi(a|s)q(s,a))$
+
 - Think of looking ahead from one state to its possible successor states:
 
   <img src="../../Reinforcement Learning/Reinforcement Learning Notes.assets/image-20200525134131000.png" alt="image-20200525134131000" style="zoom:33%;" />
