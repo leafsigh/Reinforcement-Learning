@@ -972,3 +972,157 @@ Consider a Monte Carlo version of classical Policy Iteration step:
 - $\epsilon$-greedy method is a typical method of $\epsilon$***-soft*** method. In general ***$\epsilon$-soft*** method, all nongreedy actions are given the minimal probability of $\frac{\epsilon}{|\mathcal{A}(s)|}$.
 - Remaining bulk of probability, $1-\epsilon+\frac{\epsilon}{|\mathcal{A}(s)|}$ is given to the greedy action.
 
+
+
+<font color='purple'>**Without the assumption of exploring starts, we cannot simply improve the policy by making it greedy with respect to the current value function**</font> $v_{\pi}(s)$ , <font color='purple'>**because that would prevent further exploration of nongreedy actions**</font>
+
+***However, any $\epsilon-$greedy policy that with respect to $q_{\pi}(s,a)$ is an improvement over any $\epsilon$-soft policy  is assured by the policy improvement theorem.***
+
+***PROOF***:
+
+Let $\pi’$ be the $\epsilon$-greedy policy
+
+$q_{\pi}(s,\pi’(s))=\sum_{a}\pi’(s|a)q_{\pi}(s,a)$
+
+$=\sum_{a\ne a_{greedy}}\frac{\epsilon}{|\mathcal{A}(s)|}q_{\pi}(s,a)+(1-\epsilon+\frac{\epsilon}{|\mathcal{A}(s)|})q_{\pi}(s,a_{greedy})$
+
+$=\sum_{a}\frac{\epsilon}{\mathcal{A}(s)}q_{\pi}(s,a)+(1-\epsilon)q_{\pi}(s,a_{greedy})$               or in other way: $q_{\pi}(s,a_{greedy})=max_{a}q_{\pi}(s,a)$
+
+$\ge \sum_{a}\frac{\epsilon}{\mathcal{A}(s)}q_{\pi}(s,a)+(1-\epsilon)\sum_{a}\frac{\pi(a|s)-\epsilon/|\mathcal{A}(s)|}{1-\epsilon}q_{\pi}(s,a)$
+
+*the right term is the weighted average of all state-action value functions, which is less than the state-action value of the greedy action*
+
+$=\frac{\epsilon}{|\mathcal{A}(s)|}\sum_{a}q_{\pi}(s,a)-\frac{\epsilon}{|\mathcal{A}(s)|}\sum_{a}q_{\pi}(s,a)+\sum_{a}\pi(a|s)q_{\pi}(s,a)$
+
+$=v_{\pi}(s)$
+
+***Thus, for the policy improvement, we have proved that $\pi’\ge \pi$ (because $q_{\pi}(s,\pi’(s))=v_{\pi’}\ge v_{\pi}$).***
+
+
+
+<font color='purple'>**In the above proof, the equality holds only when both**</font> $\pi$ and $\pi’$ <font color='purple'>**are optimal policies.**</font>
+
+***PROOF:***
+
+…...
+
+
+
+<font color='gold'>**Follow the above**</font> $\epsilon-$soft <font color='gold'>**policy, by policy iteration, one can assure that the policy is improved by every iteration step, except the best policy has been found. Furthermore, we have eliminated the assumption of exploring starts. The complete algorithm is concluded as follow:**</font>
+
+<font color='mediumvioletred'>***Algortithm of on-policy first-visit MC control for***</font> $\epsilon-soft$ <font color='mediumvioletred'>**policy**</font>:
+
+------
+
+- ***1. Initialization***
+
+  for all $a\in \mathcal{A}, s\in \mathcal{S}$
+
+  initialize:
+
+  $Q(s,a)\leftarrow$arbitrary
+
+  $Returns(s,a)\leftarrow$Empty list
+
+  $\pi(a|s)\leftarrow$ arbitrary $\epsilon$-soft policy
+
+- ***2. Repeat Forever***
+
+  (a) Generate an episode using $\pi$
+
+  (b) For each pair $s,a$ appearing in the episode:
+
+  ​		$G\leftarrow return$ following the first occurrence of $s,a$
+
+  ​		Append $G$ to the $Returns(s,a)$
+
+  ​		$Q(s,a)\leftarrow average(Returns(s,a))$
+
+  (c) For each $s$ in the episode:
+
+  ​		$a^{*}\leftarrow argmax_{a}Q(s,a)$
+
+  ​		For all $a\in \mathcal{A}(s)$:
+
+  
+
+
+
+
+
+#### <font color='seagreen'>Chapter 6. Temporal-Difference Learning</font>
+
+**<font color='olive'>A Brief Comparison of DP, MC and TD</font>**
+
+**[Reference](https://medium.com/ai³-theory-practice-business/reinforcement-learning-part-5-monte-carlo-and-temporal-difference-learning-889053aba07d)**
+
+The problem in Reinforcement Learning based on MDP can be concluded as a set of 6 letters:
+
+$Problem =\{\mathcal{S},\mathcal{A},\mathcal{R},P,\gamma\}$
+
+- $\mathcal{S}$ stands for states set
+- $\mathcal{A}$ stands for actions set
+- $\mathcal{R}$ stands for the reward set, where the reward is a function $r(s’,a,s)$ instead of a constant in most times.
+- $P$ is the set of state transition probabilities, where the elements inside are $p(s’,r|s,a)$
+- $\gamma$ is the dicount factor which ensures the reward are calculated discounted
+
+
+
+**MDP and DP**
+
+To solve a MDP problem, we can apply DP to evaluate a given policy $\pi$, and arrive at the optimal value function $v_{\pi}(s)$ by continuous policy iteration.
+
+Some key elements that ensure MDP can work include:
+
+- ***Dynamic Programming***: breaking a large problem down into incremental steps so optimal solutions to sub-problems can be found at any given stage.
+- ***Model***: a mathematical model which can mimic or generate the environment in real-world.
+- ***Bellman Optimality Equation***: gives us the algorithm/means to estimate the optimal value.
+
+To ensure the MDP works by applying DP, all five tuples have to be known. MDP won’t work without a model that can mimic environment.
+
+
+
+**Monte Carlo Method**
+
+In real world, it’s almost impossible to get all five tuples. If the state transition probability $P$ is missing, then we can’t solve the problem by using ***Bellman Equation*** to find out $V$ and $Q$.
+
+To transform the problem into ***MDP*** without $P$, we can have our agent run trials, constantly collecting samples, getting rewards, and thereby evaluating the value function*.* This is exactly how the Monte-Carlo method works: try many times, and the final estimated $V$ value will be very close to the real $V$ value.
+
+In this learning process, each “try” is called an ***episode***, and all episodes must terminate. That is, the ***final state of the MDP should be reached***. Values for each state are updated only based on final reward $G_t$, not on estimations of neighbor states — as occurs in the ***Bellman Optimality Equation***. —— ***Episodic MDP***
+
+- First-Visit Monte Carlo
+- Every-Visit Monte Carlo
+- Incremental Update Monte Carlo
+
+
+
+**Temporal-Defference Method**
+
+Monte Carlo Method overcomes the difficulty of unknown $P$, but one shortcoming is that if the episode runs for a long time, it will be expensive to wait for Monte Carlo evaluation.
+
+***Temporal-Difference leanring***, as a combination of ***DP*** and ***Monte Carlo***, will overcome this problem.
+
+
+
+**<font color='olive'>6.1 TD Prediction</font>**
+
+A simple every-visit Monte Carlo method that is suitable for nonstationary environments (***Constant-$\alpha$ MC***) is 
+
+$V(s)\leftarrow V(s)+\alpha(G_t-V(s))$  (6.1)
+
+where $G_t = R_1+R_2+…+R_t$, $R_t$ is the immediate reward in each time step during an episode.
+
+Monte Carlo Method has to wait until an episode ends to know $G_t$.
+
+
+
+***Temporal-Difference Method*** only needs to wait till next time step.
+
+A $TD(0)$ method goes like:
+
+$V(S_t)\leftarrow V(S_t)+\alpha(R_{t+1}+\gamma V(S_{t+1})-V(S_t)) $ (6.2)
+
+
+
+<font color='hotpink'>**By comparing equation 6.1 & 6.2, we can find that TD Method only needs**</font> $R_{t+1}+\gamma V(S_{t+1})$ <font color='hotpink'>**while Monte Carlo Method needs **</font> $G_t$.
+
