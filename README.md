@@ -13,7 +13,7 @@
 
 # Study Notes and Codes
 
-Now working on Chapter5 Monte Carlo Method of *Reinforcement Learning: An Introduction*
+Now working on Chapter6 Temporal-Difference Method of *Reinforcement Learning: An Introduction*
 
 <a download="Reinforcement Learning Notes.md" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/Reinforcement-Learning-Notes.ipynb'>Study Notes</a>
 - Images and colored texts cannot show correctly on Github. Please copy the above link into [nbviewer](https://nbviewer.jupyter.org) to get a correct view.
