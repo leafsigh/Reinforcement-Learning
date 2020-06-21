@@ -1126,3 +1126,113 @@ $V(S_t)\leftarrow V(S_t)+\alpha(R_{t+1}+\gamma V(S_{t+1})-V(S_t)) $ (6.2)
 
 <font color='hotpink'>**By comparing equation 6.1 & 6.2, we can find that TD Method only needs**</font> $R_{t+1}+\gamma V(S_{t+1})$ <font color='hotpink'>**while Monte Carlo Method needs **</font> $G_t$.
 
+
+
+Recall the state value function when we derived ***Bellman Equation*** goes like:
+
+$v_{\pi}(s)=\mathbb{E_{\pi}}[G_t|S_t = s]$                                (1)
+
+$=\mathbb{E_{\pi}}[\sum_{k=0}^\infty \gamma^kR_{t+k+1}|S_t=s]$
+
+$= \mathbb{E_{\pi}}[R_{t+1}+\sum_{k=1}\gamma^{k}R_{t+k+1}|S_t=s]$
+
+$=\mathbb{E_{\pi}}[R_{t+1}+\gamma v_{\pi}(s’)|S_t=s]$                     (2)
+
+From above derivation, we can see that ***Monte Carlo Method*** updates policy evaluation by equation (1), and ***Temporal-Difference Method*** updates policy evaluation by equation (2).
+
+
+
+**<font color='olive'>6.2 Advantages of TD Method</font>**
+
+- **Over DP**: No need for a model to mimic the environment.
+- **Over Monte Carlo**: TD is a completely online learning algorithm. No need to wait till the episode ends. Fully incremental algorithm.
+
+
+
+**<font color='olive'>6.3 Optimality of TD</font>**
+
+**Batch Updating**:
+
+Suppose there is finite observation (10 episodes or 100 timesteps). Given an approximate estimate value function $V$, ***the increments specified by (6.1) & (6.2) are updated at each timestep $t$. However, the value of $V$ only changed once, by the sum of all increments.***
+
+Under batch updating, $\alpha$-MC and TD(0) are deterministically converged, independent of the value of $\alpha$, as long as $\alpha$ (step parameter) is sufficiently small.
+
+
+
+**Difference between the estimates of TD(0) and MC:**
+
+- Batch MC always finds the estimate leads to minimized mean-squared error on training set.
+- Batch TD(0) always finds the estimate leads to maximum-likelihood model of Markov Process, where the likelihood estimate of parameters means the probability of the parameter to generate the data.
+
+**<font color='deepskyblue'>Nonbatch TD(0) converges faster, even thought not all updates go toward *equivalance-certainty*.</font>**
+
+
+
+
+
+**<font color='olive'>6.4 Sarsa: On-Policy TD Control</font>**
+
+![image-20200621165059306](Reinforcement Learning Notes.assets/image-20200621165059306.png)
+
+The problem falls into two classes, as in MC method: on-policy and off-policy.
+
+For an on-policy method, we have to estimate $q_{\pi}(s,a)$ for current behavior policy $\pi$ for all states $s$ and all actions $a$.
+
+In previous chapters, we consider transition between ***state and state***, now we consider transition between **action-state pair and action-state pair**. (Both are markov chains with a reward process)
+
+
+
+<font color='darkgreen'>**The update algorithm:**</font>
+
+$Q(S_{t},A_{t}) = Q(S_t,A_t)+\alpha(R_{t+1}+\gamma Q(S_{t+1},A_{t+1}) - Q(S_t,A_t))$
+
+This equation uses every elements in the quintuple $(S_t,A_t,R_{t+1},S_{t+1},A_{t+1})$, and that’s why it’s called ***SARSA***.
+
+
+
+<font color='mediumvioletred'>***Algortithm of SARSA (on-policy TD control)***</font> 
+
+------
+
+- ***1. Initialization***
+
+  Initialize $Q_{\pi}(s,a)$, $\forall s\in \mathcal{S},a\in\mathcal{A}$, arbitrarily.
+
+  Initialize $Q(terminal,.)=0$
+
+  - ***Repeat for Each Episode:***
+
+    Initialize $S$
+
+    Choose $A$ from $S$ using policy derived from $Q$, e.g. $\epsilon$-greedy.
+
+    - ***Repeat for each time step:***
+
+      Take action $A$, observe $R,S'$
+
+      Choose $A’$ from $S’$ derived from $Q$, e.g. $\epsilon$-greedy.
+
+      $Q_{\pi}(S,A)\leftarrow Q_{\pi}(S,A)+\alpha(R_{t+1}+\gamma Q_{\pi}(S’,A’)-Q_{\pi}(S,A))$
+
+      $S\leftarrow S’,A\leftarrow A'$
+
+      Until $S$ is terminal 
+
+***
+
+
+
+**<font color='olive'>6.4 Q-Learning: Off-Policy TD Control</font>**
+
+***One-step Q-learning is defined as:***
+
+$Q(S,A)\leftarrow Q(S,A)+\alpha(R_{t+1}+\gamma max_{a}Q(S_{t+1},a)-Q(S_t,A_t))$
+
+
+
+<font color='crimson'>**The only difference between Sarsa and Q-Learning is:**</font>
+
+- <font color='crimson'>***SARSA learns state-action value relative to the policy it follows***</font>
+
+- <font color='crimson'>***Q-Learning learns the state-action value relative to the greedy policy***</font>
+
