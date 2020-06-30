@@ -26,7 +26,9 @@ Now working on Chapter6 Temporal-Difference Method of *Reinforcement Learning: A
 
 <a download="CarRental_PolicyIteration.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/Policy_Iteration-Car_Rental_Problem%20.ipynb'>CarRental Policy Iteration (still working on it)</a>
 
-<a download="BlackJack_MonteCarlo.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/BlackJack_by_MonteCarlo.ipynb'>BlackJack by Monte Carlo (has finished policy evaluation part)</a>
+<a download="BlackJack_MonteCarlo.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/BlackJack_by_MonteCarlo.ipynb'>BlackJack by Monte Carlo</a>
+
+<a download="TD_Taxi_v3.ipynb" href='https://github.com/leafsigh/Reinforcement-Learning/blob/master/TD_Taxi_v3.ipynb'>Taxi v3 problem by SARSA and Q-Learning (Temporal Difference)</a>
 
 # Study Note
 - The study note of *Reinforcement Learning: An Introduction*. Contents in .md and .ipynb are the same.
@@ -49,7 +51,12 @@ Future works will focus on optimizing the efficiency and adding visualization.
 Solutions by `Gym` will be added later.
 
 # BlackJack
-- The BlackJack problem is soluted by **Monte Carlo Method**.
+- The BlackJack problem is solved by **Monte Carlo Method**.
 - Has finished the policy evaluation part. Currently working on policy improvement.
 - Solutions by `Gym` will be added later.
 ![](https://github.com/leafsigh/Reinforcement-Learning/blob/master/BlackJack_Visualization/png_to_gif.gif)
+
+# Taxi_v3 Problem
+- The Taxi_v3 problem is solved by **Temporal Difference Method**
+- The code contains on-policy method **SARSA** and off-policy method **Q-Learning**
+- Apply `Gym` API to make the environment
