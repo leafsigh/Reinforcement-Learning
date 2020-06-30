@@ -22,13 +22,13 @@ Now working on Chapter6 Temporal-Difference Method of *Reinforcement Learning: A
 
 <a download="GridWorld_DP.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/GridWorld_DP.ipynb'>NxN GridWorld Code (Only contain one-step policy evaluation)</a>
 
-<a download="GridWorld_by_PolicyIteration.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/GridWorld_by_PolicyIteration.ipynb'>NxN GridWorld (by Policy Iteration)</a>
-
-<a download="CarRental_PolicyIteration.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/Policy_Iteration-Car_Rental_Problem%20.ipynb'>CarRental Policy Iteration (still working on it)</a>
+<a download="GridWorld_by_PolicyIteration.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/GridWorld_by_PolicyIteration.ipynb'>NxN GridWorld by Policy Iteration</a>
 
 <a download="BlackJack_MonteCarlo.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/BlackJack_by_MonteCarlo.ipynb'>BlackJack by Monte Carlo</a>
 
 <a download="TD_Taxi_v3.ipynb" href='https://github.com/leafsigh/Reinforcement-Learning/blob/master/TD_Taxi_v3.ipynb'>Taxi v3 problem by SARSA and Q-Learning (Temporal Difference)</a>
+
+<a download="CarRental_PolicyIteration.ipynb" href='https://github.com/leafsigh/Reinforcement_Learning/blob/master/Policy_Iteration-Car_Rental_Problem%20.ipynb'>CarRental Policy Iteration (unfinished)</a>
 
 # Study Note
 - The study note of *Reinforcement Learning: An Introduction*. Contents in .md and .ipynb are the same.
